@@ -12,14 +12,14 @@
             <div class="list-box-title" @click="toDetail(item)">
               <div class="list-col width280" style="">
                 <div class="icon-title-content">
-                  <img class="list-title-icon" src="http://yj.kiy.cn/Content/Images/App/assets/icon/time.png">
+                  <image class="list-title-icon" src="http://yj.kiy.cn/Content/Images/App/assets/icon/time.png">
                   <text class="title">操作时间</text>
                 </div>
                 <text class="text center text-color">{{ item.DistributorDate ? item.DistributorDate : '暂无' }}</text>
               </div>
               <div class="list-col">
                 <div class="icon-title-content">
-                  <img class="list-title-icon" src="http://yj.kiy.cn/Content/Images/App/assets/icon/user.png">
+                  <image class="list-title-icon" src="http://yj.kiy.cn/Content/Images/App/assets/icon/user.png">
                   <text class="title">会员号</text>
                 </div>
                 <text class="text center text-color">{{item.UserId}}</text>

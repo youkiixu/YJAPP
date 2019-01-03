@@ -5,8 +5,8 @@
     <list  ref="list" loadmoreoffset="10" :showRefresh="true" @refresh="onrefresh">
       <cell v-for="(item,index) in listData" :key="index">
         <div class="border-cell" @click="toDetail(item)">
-          <img class="img left" v-if="item.payType != '支付宝'|| item.payType === '中信微信'" :src="wechatpay" alt="">
-          <img class="img left" v-if="item.payType === '支付宝'|| item.payType === '中信支付宝'" :src="alipay" alt="">
+          <image class="img left" v-if="item.payType != '支付宝'|| item.payType === '中信微信'" :src="wechatpay" alt="">
+          <image class="img left" v-if="item.payType === '支付宝'|| item.payType === '中信支付宝'" :src="alipay" alt="">
           <div class="center">
             <text class="text">{{item.out_trade_no}}</text>
             <text class="text overflow">订单号：{{item.strIDs}}</text>

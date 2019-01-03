@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="top border-tb">
-      <img class="img left" v-if="item.payType != '支付宝'" src="http://yj.kiy.cn/Content/Images/App/wechatpay.png" alt="">
-      <img class="img left" v-if="item.payType === '支付宝'" src="http://yj.kiy.cn/Content/Images/App/alipay.png" alt="">
+      <image class="img left" v-if="item.payType != '支付宝'" src="http://yj.kiy.cn/Content/Images/App/wechatpay.png" alt="">
+      <image class="img left" v-if="item.payType === '支付宝'" src="http://yj.kiy.cn/Content/Images/App/alipay.png" alt="">
       
       <text class="top-text">{{item.payType}}支付</text>
     </div>

@@ -19,7 +19,7 @@
 			</div>
       <text  style="margin-left: 100px;color: red;">注意：请不要输入新商城单号或生产单号!</text>
       
-			<img class="login-btn" src="http://yj.kiy.cn/Content/Images/App/assets/person/submit.png" @click="submit">
+			<image class="login-btn" src="http://yj.kiy.cn/Content/Images/App/assets/person/submit.png" @click="submit">
       <wxc-popover ref="wxc-popover" :buttons="btns" :position="popoverPosition" :arrowPosition="popoverArrowPosition" @wxcPopoverButtonClicked="popoverButtonClicked"></wxc-popover>
 	</div>
 </template>

@@ -8,9 +8,9 @@
 		<image resize="stretch" class="title-bg1" src="http://yj.kiy.cn/Content/Images/App/assets/login/loginbg.png"></image>
 		<!-- end -->
 		<div class="login-box">
-			<img class="image" src="http://yj.kiy.cn/Content/Images/App/assets/login/logo.png" @click="checkQRCODE">
+			<image class="image" src="http://yj.kiy.cn/Content/Images/App/assets/login/logo.png" @click="checkQRCODE">
 			<div class="my-icon-input" style="margin-bottom: 30px">
-				<img class="user-icon" src="http://yj.kiy.cn/Content/Images/App/assets/login/usericon.png">
+				<image class="user-icon" src="http://yj.kiy.cn/Content/Images/App/assets/login/usericon.png">
 				<input 
 				class="my-input" 
 				@focus="onfocus('key')"
@@ -20,7 +20,7 @@
 				/>
 			</div>
 			<div class="my-icon-input" >
-				<img class="user-icon" src="http://yj.kiy.cn/Content/Images/App/assets/login/pwdicon.png">
+				<image class="user-icon" src="http://yj.kiy.cn/Content/Images/App/assets/login/pwdicon.png">
 				<input 
 				@focus="onfocus('pwd')"
 				v-model="loginInfo.pwd"
@@ -30,7 +30,7 @@
 				/>
 			</div>
 
-			<img class="login-btn" src="http://yj.kiy.cn/Content/Images/App/assets/login/loginbtn.png" @click="login">
+			<image class="login-btn" src="http://yj.kiy.cn/Content/Images/App/assets/login/loginbtn.png" @click="login">
 			<text style="text-align: center;color: #999;margin-top:10px;" @click="downLoad">点击下载最新APP</text>
 		</div>
 	</div>
@@ -84,7 +84,9 @@
 				var _this = this;
 				try {
 					this.$notice.loading.show("正在登录")
-					const RES = await API.YJ_LOGIN(this.loginInfo)
+                    const RES = await API.YJ_LOGIN(this.loginInfo)
+                    console.log(RES);
+                    
 					this.$notice.loading.hide()
 					if(RES.SUCCESS) {
                         this.$storage.setSync('nameAndPwd' , _this.loginInfo)

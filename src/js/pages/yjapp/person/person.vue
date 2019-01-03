@@ -1,8 +1,8 @@
 <template>
   <div class="login-box">
-			<!-- <img class="image" src="http://yj.kiy.cn/Content/Images/App/assets/login/logo.png"> -->
+			<!-- <image class="image" src="http://yj.kiy.cn/Content/Images/App/assets/login/logo.png"> -->
 			<div class="my-icon-input" style="margin-bottom: 64px">
-				<img class="user-icon" src="http://yj.kiy.cn/Content/Images/App/assets/person/old.png">
+				<image class="user-icon" src="http://yj.kiy.cn/Content/Images/App/assets/person/old.png">
 				<input 
 				class="my-input" 
 				v-model="oldPassword" 
@@ -11,7 +11,7 @@
 				></input>
 			</div>
 			<div class="my-icon-input" >
-				<img class="user-icon" src="http://yj.kiy.cn/Content/Images/App/assets/person/new.png">
+				<image class="user-icon" src="http://yj.kiy.cn/Content/Images/App/assets/person/new.png">
 				<input 
 				v-model="newPassword" 
 				placeholder="重新输入新密码"
@@ -20,7 +20,7 @@
 				></input>
 			</div>
 
-			<img class="login-btn" src="http://yj.kiy.cn/Content/Images/App/assets/person/submit.png" @click="submit">
+			<image class="login-btn" src="http://yj.kiy.cn/Content/Images/App/assets/person/submit.png" @click="submit">
 	</div>
 </template>
 <script>

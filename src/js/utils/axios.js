@@ -44,7 +44,9 @@ axios.getAjaxData = (param , TYPE , strMethod , uid) => new Promise((resolve , r
         url: axios.YJdomain + '/Admins/GetData/GetAjaxData',
         data:  {data : en},
         method: 'POST',
-        header: {},
+        header: {
+            "Content-Type" : "application/x-www-form-urlencoded"
+        },
         timeout: 30000
     }, (resData) => {
         // console.log(JSON.stringify(resData.data))

@@ -1,7 +1,7 @@
 <template>
 		<waterfall :show-scrollbar="false">
 			<header class="top"> 
-					<img src="http://yj.kiy.cn/Content/Images/App/assets/main/main-bg1.png" class="top-bg" ref="headbg" alt="">
+					<image src="http://yj.kiy.cn/Content/Images/App/assets/main/main-bg1.png" class="top-bg" ref="headbg" alt="">
 					<image 
 					ref="inner" 
 					src="http://yj.kiy.cn/Content/Images/App/assets/round-inner.png" 

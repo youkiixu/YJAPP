@@ -3,22 +3,22 @@
       <cell>
         <div class="top content">
             <div class="top-row">
-                <img class="top-row-icon" src="http://yj.kiy.cn/Content/Images/App/assets/icon/time.png">
+                <image class="top-row-icon" src="http://yj.kiy.cn/Content/Images/App/assets/icon/time.png">
                 <text class="gray-color">&nbsp;配送时间</text>
                 <text class="text-color">&nbsp;{{listItem.DistributorDate}}</text>
             </div>
             <div class="top-row">
-                <img class="top-row-icon" src="http://yj.kiy.cn/Content/Images/App/assets/icon/time.png">
+                <image class="top-row-icon" src="http://yj.kiy.cn/Content/Images/App/assets/icon/time.png">
                 <text class="gray-color">&nbsp;生产单号</text>
                 <text class="text-color">&nbsp;{{listItem.ThirdPlatformOrderNo}}</text>
             </div>
             <div class="top-row">
-                <img class="top-row-icon" src="http://yj.kiy.cn/Content/Images/App/assets/icon/time.png">
+                <image class="top-row-icon" src="http://yj.kiy.cn/Content/Images/App/assets/icon/time.png">
                 <text class="gray-color">&nbsp;平台单号</text>
                 <text class="text-color">&nbsp;{{listItem.CytMallId}}</text>
             </div>
             <div class="top-row">
-                <img class="top-row-icon" src="http://yj.kiy.cn/Content/Images/App/assets/icon/time.png">
+                <image class="top-row-icon" src="http://yj.kiy.cn/Content/Images/App/assets/icon/time.png">
                 <text class="gray-color">&nbsp;物流单号</text>
                 <text class="text-color">&nbsp;{{listItem.Id}}</text>
             </div>
