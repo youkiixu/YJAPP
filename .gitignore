@@ -46,6 +46,7 @@ bin/
 gen/
 
 # Local configuration file (sdk path, etc)
+# 让上传到git
 local.properties
 sign.properties
 
