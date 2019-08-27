@@ -30,9 +30,11 @@ pids
 # built application files
 *.apk
 *.ap_
-wxframework
-sdk
-bmwidget
+# 让上传到git
+# wxframework
+# sdk
+# bmwidget
+
 # files for the dex VM
 *.dex
 
