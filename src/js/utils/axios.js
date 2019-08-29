@@ -1,5 +1,5 @@
 import encode from './encode'
-const bmAxios = weex.requireModule('bmAxios') 
+const bmAxios = weex.requireModule('bmAxios')
 const storage = weex.requireModule('bmStorage')
 const event = weex.requireModule('bmEvents')
 const modal = weex.requireModule('modal')
@@ -37,9 +37,10 @@ axios.getAjaxData = (param , TYPE , strMethod , uid) => new Promise((resolve , r
         {uid : uid || 'd3bd0809-8030-4843-9fed-48878edb2f6a'},
         {param : paramData}
     )
+
     // console.log(JSON.stringify(data))
+
     const en = encode(JSON.stringify(data))
-    
 	bmAxios.fetch({
         url: axios.YJdomain + '/Admins/GetData/GetAjaxData',
         data:  {data : en},
@@ -51,7 +52,7 @@ axios.getAjaxData = (param , TYPE , strMethod , uid) => new Promise((resolve , r
         if(resData.status == 200) {
             if (resData.data.SUCCESS) {
                 resolve(resData.data)
-            } 
+            }
             else if (resData.data.result == 'ok') {
                 resolve(resData.data)
             }
@@ -71,8 +72,8 @@ axios.getAjaxData = (param , TYPE , strMethod , uid) => new Promise((resolve , r
             })
         }
     })
-    
-    
+
+
 })
 
 axios.postApiData = (param , url , type) => new Promise((resolve , reject) => {

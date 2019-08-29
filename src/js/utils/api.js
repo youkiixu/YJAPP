@@ -1,8 +1,8 @@
 import axios from './axios.js'
 
 
-let api = { 
-	App_Version : '3.0',
+let api = {
+	App_Version : '3.1',
 	YJ_GETORDER : (data) => axios.getAjaxData(data , 'search' , 'YJApp_OrderInfo'),
 	YJ_ENTER  : (data) => axios.getAjaxData(data , 'enterIn'),
 	YJ_SEARCH : (data) => axios.getAjaxData(data , 'search'),
@@ -28,17 +28,23 @@ let api = {
 	YJ_ORDERLISTSTATUS: (data) => axios.getAjaxData(data , undefined , 'QueryOrderRecordsList' , '217141a5-01d0-4696-9500-ae2d82a8cb4c'),
 	// 查彩印通订单
 	KIY_SEARCHORDER: (data) => axios.postApiData(data, `${axios.kiyDomain}/webapi/Himall.NewShop.GetOrderInfo`),
-	//权限 
+	//权限
 	get_access: (data) => axios.getAjaxData(data , 'search' , 'AppMenuAuthor' ),
 	get_accessBtn: (data) => axios.getAjaxData(data , 'search' , 'AppButtonBizAuthor' ),
 	// 获取发货单列表
 	get_fahuoList: (data) => axios.getAjaxData(data , 'search' , 'getFahuoList' ),
 	// 获取发货信息
 	get_fahuoInfo : (data) => axios.getAjaxData(data , 'search' , 'getFahuoInfo'),
-	// 发货单确认到货 
+	// 发货单确认到货
 	YJ_enterFahuo: (data) => axios.getAjaxData(data , 'orderGroup' , 'enterOrderGroup'),
 	// 读取业务员
-	get_adminList: (data) => axios.getAjaxData(data, 'search', 'GetDeliveryList', '217141a5-01d0-4696-9500-ae2d82a8cb4c'),
+    get_adminList: (data) => axios.getAjaxData(data, 'search', 'GetDeliveryList', '217141a5-01d0-4696-9500-ae2d82a8cb4c'),
+    // 产品列表
+    get_productsList: (data) => axios.getAjaxData(data, 'cSearch', 'QItems_YSH', '217141a5-01d0-4696-9500-ae2d82a8cb4c'),
+    // 区域统计
+    get_areaList: (data) => axios.getAjaxData(data , 'cSearch', 'OrderManager_YSH' ),
+    // 业绩统计
+    get_OrderSumManager_YSH: (data) => axios.getAjaxData(data,'cSearch' , 'OrderSumManager_YSH'),
 	// 获取APP操作记录
 	Get_AppRecord: (data) => axios.getAjaxData(data , 'search' , 'Get_AppRecord'),
 	// getUncollectedOrder , getPaycollectOrder , getAllOrder 根据业务员Id获取已收款， 未收款 ， 所有订单
@@ -156,7 +162,7 @@ function formatNumber(n) {
     return str[1] ? str : `0${str}`
 }
 
-function padLeft (str) { 
+function padLeft (str) {
 	var len = 2;
 	var char = '0';
 	if(typeof str != 'string'){
@@ -165,4 +171,6 @@ function padLeft (str) {
 	return str.length < len ? char + str : str
 }
 
-export default api  
+
+
+export default api

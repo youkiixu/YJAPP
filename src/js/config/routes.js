@@ -8,7 +8,7 @@ export default {
     'main': {
         url: '/pages/yjapp/index.js'
     },
-    'login': { 
+    'login': {
         url: '/pages/yjapp/login.js'
     },
     'logistical-list': {
@@ -102,6 +102,18 @@ export default {
     'manualInput': {
         title: '手工输入',
         url: '/pages/yjapp/muff/index.js'
+    },
+    'areaOrder': {
+        title: '区域订单',
+        url: '/pages/yjapp/area-order/list.js'
+    },
+    'performance': {
+        title: '业绩统计',
+        url: '/pages/yjapp/performance/list.js'
+    },
+    'areaOrderDetail': {
+        title: '区域订单详情',
+        url: '/pages/yjapp/area-order/detail.js'
     }
 
 

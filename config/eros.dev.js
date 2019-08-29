@@ -32,8 +32,10 @@ module.exports = {
         'js/pages/yjapp/help/index.vue',
         'js/pages/yjapp/person/apprecord.vue',
         'js/pages/yjapp/service/orderRefund.vue',
-        'js/pages/yjapp/muff/index.vue'
-
+        'js/pages/yjapp/muff/index.vue',
+        'js/pages/yjapp/area-order/list.vue',
+        'js/pages/yjapp/area-order/detail.vue',
+        'js/pages/yjapp/performance/list.vue'
     ],
     'alias': {
         'Components': 'js/components',
