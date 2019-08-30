@@ -127,7 +127,7 @@ export default {
             return (
                 (weex.config.env.deviceHeight / weex.config.env.deviceWidth) *
                     750 -
-                400
+                420
             );
         },
         isDeliver() {
@@ -213,7 +213,7 @@ export default {
                     );
                 });
                 this.intSumPriceTotal = this.intSumPriceTotal.toFixed(2)
-                this.intPerPriceTotal = (intPerPriceTotal / DGDATA.length).toFixed(6)
+                this.intPerPriceTotal = (this.intPerPriceTotal / DGDATA.length).toFixed(6)
                 this.listData = DGDATA;
             } else {
                 this.$notice.toast({
