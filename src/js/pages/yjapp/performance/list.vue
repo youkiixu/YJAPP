@@ -59,7 +59,7 @@
                         <div class="table-td width-100px"><text class="table-text">{{item.intUCount}}</text></div>
                         <div class="table-td width-100px"><text class="table-text">{{item.intOCount}}</text></div>
                         <div class="table-td width-200px"><text class="table-text">{{item.intSumPrice}}</text></div>
-                        <div class="table-td width-200px"><text class="table-text">{{item.intPerPrice}}</text></div>
+                        <div class="table-td width-200px"><text class="table-text">{{item.intPerPrice.toFixed(2)}}</text></div>
                     </cell>
                 </list>
 
@@ -213,7 +213,7 @@ export default {
                     );
                 });
                 this.intSumPriceTotal = this.intSumPriceTotal.toFixed(2)
-                this.intPerPriceTotal = (this.intPerPriceTotal / DGDATA.length).toFixed(6)
+                this.intPerPriceTotal = (this.intPerPriceTotal / DGDATA.length).toFixed(2)
                 this.listData = DGDATA;
             } else {
                 this.$notice.toast({

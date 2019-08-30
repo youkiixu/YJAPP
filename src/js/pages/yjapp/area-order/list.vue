@@ -25,7 +25,8 @@
                                class="search-bar-left-icon"></image>
                     </div>
                 </div>
-                <!-- <div class="search-bar-left"
+                <div class="search-bar-left"
+                    v-if="!isDeliver"
                      @click="selectDeliver">
                     <div class="search-text-box">
                         <text class="search-bar-left-text">业务员: </text>
@@ -33,7 +34,7 @@
                         <image src="http://yj.kiy.cn/Content/Images/App/assets/la.png"
                                class="search-bar-left-icon"></image>
                     </div>
-                </div> -->
+                </div>
             </div>
 
         </div>
@@ -109,7 +110,7 @@ export default {
         return {
             listData: [],
             param: {
-                "@rowIndex": 0
+                "rowIndex": 0
             },
             showload: false,
             sub: "",
@@ -153,6 +154,10 @@ export default {
         userInfo() {
             var userInfo = API.get_userInfo(this);
             return userInfo;
+        },
+        isDeliver() {
+            var userInfo = API.get_userInfo(this);
+            return userInfo.RoleId == 8 || userInfo.RoleId == 13;
         }
     },
     created() {
@@ -176,7 +181,7 @@ export default {
                 strSysCode: "YJAPP",
                 strAuthor: "YJ"
             };
-            this.param["@rowIndex"]++;
+            this.param["rowIndex"]++;
             if (this.initGet) {
                 this.$notice.loading.show("正在加载");
             }
@@ -211,24 +216,25 @@ export default {
                 }
 
             }
-            // if (this.selectDeliverData.RealName != "全部") {
-            //     param = Object.assign(param, {
-            //         "@DistributorId": this.selectDeliverData.Id
-            //     });
-            // }
+            if (this.selectDeliverData.RealName != "全部") {
+                param = Object.assign(param, {
+                    SalesmanId: this.selectDeliverData.Id
+                });
+            }
             if (this.selectProductData.strName != "全部") {
                 param = Object.assign(param, {
                     qCode: this.selectProductData.Id
                 });
             }
+
             try {
                 var RES = await API.get_areaList(param);
-                if (param["@rowIndex"] === 1) {
+                if (param["rowIndex"] === 1) {
                     this.listData = [];
                 }
                 var DGDATA = RES.DATA.Head;
                 if (DGDATA.length != 0) {
-                    this.listData = [];
+                    // this.listData = [];
                     this.listData = this.listData.concat(DGDATA);
                 } else {
                     this.$notice.toast({
@@ -269,7 +275,7 @@ export default {
             });
             this.param = Object.assign(this.param, param.type);
 
-            // this.QueryAdminList();
+            this.QueryAdminList();
             this.getProductsType();
             // this.setNav();
             this.getData();
@@ -304,7 +310,7 @@ export default {
                     if (event.result === "success") {
                         this.selectDeliverData = this.deliverList[event.data];
                         this.index = event.data;
-                        this.getData();
+                        this.initGetData();
                     }
                 }
             );
@@ -360,14 +366,14 @@ export default {
             this.deliverList = DATA;
         },
         initGetData() {
-            this.param["@rowIndex"] = 0;
+            this.param["rowIndex"] = 0;
             this.listData = [];
             this.initGet = true;
             this.getData();
         },
         onrefresh() {
             this.refresh = true;
-            this.param["@rowIndex"] = 0;
+            this.param["rowIndex"] = 0;
             this.listData = [];
             this.getData();
         },

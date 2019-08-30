@@ -188,8 +188,8 @@ export default {
       if (this.userInfo.RoleId === 1 || this.userInfo.RoleId === 4) {
       } else {
         this.param = Object.assign(this.param, {
-        //   DeliverPhone: this.userInfo.Mobile,
-          SalesmanId: this.userInfo.adminId
+          DeliverPhone: this.userInfo.Mobile,
+        //   SalesmanId: this.userInfo.adminId
         });
       }
       if (this.param["page_no"] === 1) {
