@@ -39,7 +39,6 @@ axios.getAjaxData = (param , TYPE , strMethod , uid) => new Promise((resolve , r
     )
 
     // console.log(JSON.stringify(data))
-
     const en = encode(JSON.stringify(data))
 	bmAxios.fetch({
         url: axios.YJdomain + '/Admins/GetData/GetAjaxData',

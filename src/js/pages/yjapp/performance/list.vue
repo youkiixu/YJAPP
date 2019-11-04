@@ -44,6 +44,7 @@
                     <div class="table-td table-head width-100px"><text class="table-text">订单数</text></div>
                     <div class="table-td table-head width-200px"><text class="table-text">订单额</text></div>
                     <div class="table-td table-head width-200px"><text class="table-text">客单价</text></div>
+                    <div class="table-td table-head width-200px"><text class="table-text">日期</text></div>
                 </div>
                 <!-- @loadmore="getData" -->
                 <list class="bui-list"
@@ -60,6 +61,7 @@
                         <div class="table-td width-100px"><text class="table-text">{{item.intOCount}}</text></div>
                         <div class="table-td width-200px"><text class="table-text">{{item.intSumPrice}}</text></div>
                         <div class="table-td width-200px"><text class="table-text">{{item.intPerPrice.toFixed(2)}}</text></div>
+                        <div class="table-td width-200px"><text class="table-text">{{item.orderDate}}</text></div>
                     </cell>
                 </list>
 
@@ -185,7 +187,12 @@ export default {
             } else {
                 this.$notice.loading.show("正在加载");
             }
-            var RES = await API.get_OrderSumManager_YSH(param);
+            var RES;
+            if (this.userInfo.RoleId == 8 || this.userInfo.RoleId == 13) {
+                RES = await API.get_OrderSumManagerDeliver_YSH(param);
+            } else {
+                 RES = await API.get_OrderSumManager_YSH(param);
+            }
             this.listData = [];
             var DGDATA = RES.DATA;
             this.intUCountTotal = 0;
@@ -494,12 +501,12 @@ export default {
     margin-left: 10px;
 }
 .table {
-    width: 750px;
+    width: 950px;
     /* min-height: 750px; */
 }
 .table-cell {
     position: relative;
-    width: 750px;
+    width: 950px;
     flex-direction: row;
 }
 .table-td {
