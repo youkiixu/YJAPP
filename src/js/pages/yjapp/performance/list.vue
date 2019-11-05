@@ -11,6 +11,27 @@
                           @endDateFinish="endDateFinish"></datepick>
                 <div class="search-bar-top">
                     <div class="search-bar-left"
+                         @click="selectOrderStatus">
+                        <div class="search-text-box">
+                            <text class="search-bar-left-text">状态: </text>
+                            <text class="search-bar-right-text">{{selectOrderStatusData.strName}}</text>
+                            <image src="http://yj.kiy.cn/Content/Images/App/assets/la.png"
+                                   class="search-bar-left-icon"></image>
+                        </div>
+                    </div>
+
+                    <div class="search-bar-left"
+                         @click="selectProduction">
+                        <div class="search-text-box">
+                            <text class="search-bar-left-text">审核: </text>
+                            <text class="search-bar-right-text">{{selectProductionData.strName}}</text>
+                            <image src="http://yj.kiy.cn/Content/Images/App/assets/la.png"
+                                   class="search-bar-left-icon"></image>
+                        </div>
+                    </div>
+                </div>
+                <div class="search-bar-top">
+                    <div class="search-bar-left"
                          @click="selectProduct">
                         <div class="search-text-box">
                             <text class="search-bar-left-text">品类: </text>
@@ -30,7 +51,9 @@
                                    class="search-bar-left-icon"></image>
                         </div>
                     </div>
+
                 </div>
+
 
             </div>
 
@@ -44,6 +67,7 @@
                     <div class="table-td table-head width-100px"><text class="table-text">订单数</text></div>
                     <div class="table-td table-head width-200px"><text class="table-text">订单额</text></div>
                     <div class="table-td table-head width-200px"><text class="table-text">客单价</text></div>
+                    <div class="table-td table-head width-200px"><text class="table-text">关闭单金额</text></div>
                     <div class="table-td table-head width-200px"><text class="table-text">日期</text></div>
                 </div>
                 <!-- @loadmore="getData" -->
@@ -53,6 +77,15 @@
                       :showRefresh="true"
                       @refresh="getData"
                       loadmoreoffset="2">
+                    <cell class="table-cell">
+                        <div class="table-td table-bottom "><text class="table-text">汇总:</text></div>
+                        <div class="table-td table-bottom width-100px"><text class="table-text">{{intUCountTotal}}</text></div>
+                        <div class="table-td table-bottom width-100px"><text class="table-text">{{intOCountTotal}}</text></div>
+                        <div class="table-td table-bottom width-200px"><text class="table-text">{{intSumPriceTotal}}</text></div>
+                        <div class="table-td table-bottom width-200px"><text class="table-text">{{intPerPriceTotal }}</text></div>
+                        <div class="table-td table-bottom width-200px"><text class="table-text">{{intClosePriceTotal }}</text></div>
+                        <div class="table-td table-bottom width-200px"><text class="table-text">日期</text></div>
+                    </cell>
                     <cell class="table-cell"
                           v-for="(item , key) in listData"
                           :key="key">
@@ -60,7 +93,8 @@
                         <div class="table-td width-100px"><text class="table-text">{{item.intUCount}}</text></div>
                         <div class="table-td width-100px"><text class="table-text">{{item.intOCount}}</text></div>
                         <div class="table-td width-200px"><text class="table-text">{{item.intSumPrice}}</text></div>
-                        <div class="table-td width-200px"><text class="table-text">{{item.intPerPrice.toFixed(2)}}</text></div>
+                        <div class="table-td width-200px"><text class="table-text">{{item.intPerPrice}}</text></div>
+                        <div class="table-td width-200px"><text class="table-text">{{item.intClosePrice}}</text></div>
                         <div class="table-td width-200px"><text class="table-text">{{item.orderDate}}</text></div>
                     </cell>
                 </list>
@@ -68,16 +102,16 @@
             </scroller>
 
         </div>
-        <div class="bottom-sum">
+        <!-- <div class="bottom-sum">
             <div class="table-cell">
                 <div class="table-td table-bottom "><text class="table-text">汇总:</text></div>
                 <div class="table-td table-bottom width-100px"><text class="table-text">{{intUCountTotal}}</text></div>
                 <div class="table-td table-bottom width-100px"><text class="table-text">{{intOCountTotal}}</text></div>
                 <div class="table-td table-bottom width-200px"><text class="table-text">{{intSumPriceTotal}}</text></div>
                 <div class="table-td table-bottom width-200px"><text class="table-text">{{intPerPriceTotal }}</text></div>
-
+                <div class="table-td table-bottom width-200px"><text class="table-text">{{intClosePriceTotal }}</text></div>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 <script>
@@ -85,6 +119,7 @@ import datepick from "../_mods/datepick";
 import API from "Utils/api";
 import { accAdd } from "Utils/tool";
 const picker = weex.requireModule("picker");
+import { WxcCheckbox } from "weex-ui";
 function checkNumber(theObj) {
     var reg = /^[0-9]+.?[0-9]*$/;
     if (reg.test(theObj)) {
@@ -94,7 +129,8 @@ function checkNumber(theObj) {
 }
 export default {
     components: {
-        datepick
+        datepick,
+        WxcCheckbox
     },
     data() {
         return {
@@ -108,16 +144,63 @@ export default {
             intOCountTotal: 0,
             intSumPriceTotal: 0,
             intPerPriceTotal: 0,
+            intClosePriceTotal: 0,
             selectDeliverData: {
                 RealName: "全部"
             },
             selectProductData: {
                 strName: "全部"
             },
+            selectProductionData: {
+                strName: "全部"
+            },
+            productionList: [
+                {
+                    strName: "全部"
+                },
+                {
+                    strName: "已审",
+                    value: 1
+                },
+                {
+                    strName: "未审",
+                    value: 0
+                }
+            ],
+            selectOrderStatusData: {
+                strName: "全部"
+            },
+            orderStatusList: [
+                {
+                    strName: "全部"
+                },
+                {
+                    strName: "待付款",
+                    value: 1
+                },
+                {
+                    strName: "待发货",
+                    value: 2
+                },
+                {
+                    strName: "待收货",
+                    value: 3
+                },
+                {
+                    strName: "交易完成",
+                    value: 5
+                },
+                {
+                    strName: "已关闭",
+                    value: 4
+                }
+            ],
             deliverList: [],
             productsList: [],
             index: -1,
-            index2: -1
+            index2: -1,
+            index3: 0,
+            index4: 0
         };
     },
     computed: {
@@ -183,15 +266,34 @@ export default {
                     qCode: this.selectProductData.Id
                 });
             }
+
+            if(this.selectProductionData.strName != '全部') {
+                param = Object.assign(param , {
+                    "Production" : this.selectProductionData.value
+                })
+            } else {
+                delete param['Production']
+            }
+
+            if(this.selectOrderStatusData.strName != '全部') {
+                param = Object.assign(param , {
+                    "OrderStatus" : this.selectOrderStatusData.value
+                })
+            } else {
+                delete param['OrderStatus']
+            }
+
             if (onrefreshState) {
             } else {
                 this.$notice.loading.show("正在加载");
             }
             var RES;
+            console.log(param);
+
             if (this.userInfo.RoleId == 8 || this.userInfo.RoleId == 13) {
                 RES = await API.get_OrderSumManagerDeliver_YSH(param);
             } else {
-                 RES = await API.get_OrderSumManager_YSH(param);
+                RES = await API.get_OrderSumManager_YSH(param);
             }
             this.listData = [];
             var DGDATA = RES.DATA;
@@ -199,6 +301,7 @@ export default {
             this.intOCountTotal = 0;
             this.intSumPriceTotal = 0;
             this.intPerPriceTotal = 0;
+            this.intClosePriceTotal = 0;
             if (DGDATA.length != 0) {
                 var newData = [];
                 DGDATA.map(item => {
@@ -218,9 +321,15 @@ export default {
                         this.intPerPriceTotal,
                         item.intPerPrice
                     );
+                    this.intClosePriceTotal = accAdd(
+                        this.intClosePriceTotal,
+                        item.intClosePrice
+                    );
                 });
-                this.intSumPriceTotal = this.intSumPriceTotal.toFixed(2)
-                this.intPerPriceTotal = (this.intPerPriceTotal / DGDATA.length).toFixed(2)
+                this.intSumPriceTotal = this.intSumPriceTotal.toFixed(2);
+                this.intPerPriceTotal = (
+                    this.intPerPriceTotal / DGDATA.length
+                ).toFixed(2);
                 this.listData = DGDATA;
             } else {
                 this.$notice.toast({
@@ -317,6 +426,54 @@ export default {
                     if (event.result === "success") {
                         this.selectProductData = this.productsList[event.data];
                         this.index2 = event.data;
+                        this.getData();
+                    }
+                }
+            );
+        },
+        selectProduction() {
+            var items = [];
+            if (items.length === 0) {
+                this.productionList.map(item => {
+                    items.push(item.strName);
+                });
+            }
+
+            picker.pick(
+                {
+                    index: this.index3,
+                    items
+                },
+                event => {
+                    if (event.result === "success") {
+                        this.selectProductionData = this.productionList[
+                            event.data
+                        ];
+                        this.index3 = event.data;
+                        this.getData();
+                    }
+                }
+            );
+        },
+        selectOrderStatus() {
+            var items = [];
+            if (items.length === 0) {
+                this.orderStatusList.map(item => {
+                    items.push(item.strName);
+                });
+            }
+
+            picker.pick(
+                {
+                    index: this.index4,
+                    items
+                },
+                event => {
+                    if (event.result === "success") {
+                        this.selectOrderStatusData = this.orderStatusList[
+                            event.data
+                        ];
+                        this.index4 = event.data;
                         this.getData();
                     }
                 }
@@ -501,12 +658,12 @@ export default {
     margin-left: 10px;
 }
 .table {
-    width: 950px;
+    width: 1150px;
     /* min-height: 750px; */
 }
 .table-cell {
     position: relative;
-    width: 950px;
+    width: 1150px;
     flex-direction: row;
 }
 .table-td {
