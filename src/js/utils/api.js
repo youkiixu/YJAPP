@@ -2,7 +2,7 @@ import axios from './axios.js'
 
 
 let api = {
-	App_Version : '3.7',
+	App_Version : '3.8',
 	YJ_GETORDER : (data) => axios.getAjaxData(data , 'search' , 'YJApp_OrderInfo'),
 	YJ_ENTER  : (data) => axios.getAjaxData(data , 'enterIn'),
 	YJ_SEARCH : (data) => axios.getAjaxData(data , 'search'),
@@ -47,6 +47,8 @@ let api = {
     get_OrderSumManager_YSH: (data) => axios.getAjaxData(data,'cSearch' , 'OrderSumManager_YSH'),
     // 业务员业绩统计
     get_OrderSumManagerDeliver_YSH: (data) => axios.getAjaxData(data ,'cSearch' , 'OrderSumManagerDeliver_YSH'),
+    //业务员业绩统计查询
+    get_OrderManagerDetail_YSH: (data) => axios.getAjaxData(data ,'cSearch' , 'OrderManagerDetail_YSH'),
 	// 获取APP操作记录
 	Get_AppRecord: (data) => axios.getAjaxData(data , 'search' , 'Get_AppRecord'),
 	// getUncollectedOrder , getPaycollectOrder , getAllOrder 根据业务员Id获取已收款， 未收款 ， 所有订单

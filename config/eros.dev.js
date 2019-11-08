@@ -35,7 +35,9 @@ module.exports = {
         'js/pages/yjapp/muff/index.vue',
         'js/pages/yjapp/area-order/list.vue',
         'js/pages/yjapp/area-order/detail.vue',
-        'js/pages/yjapp/performance/list.vue'
+        'js/pages/yjapp/performance/list.vue',
+        'js/pages/yjapp/performance/detail.vue',
+        'js/pages/yjapp/performance/adminDetail.vue'
     ],
     'alias': {
         'Components': 'js/components',

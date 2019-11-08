@@ -42,6 +42,19 @@
                     </div>
 
                     <div class="search-bar-left"
+                         @click="selectRemindType">
+                        <div class="search-text-box">
+                            <text class="search-bar-left-text">配送: </text>
+                            <text class="search-bar-right-text">{{selectRemindTypeData.strName}}</text>
+                            <image src="http://yj.kiy.cn/Content/Images/App/assets/la.png"
+                                   class="search-bar-left-icon"></image>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="search-bar-top"
+                     v-if="!isDeliver">
+                    <div class="search-bar-left"
                          v-if="!isDeliver"
                          @click="selectDeliver">
                         <div class="search-text-box">
@@ -53,7 +66,6 @@
                     </div>
 
                 </div>
-
 
             </div>
 
@@ -68,6 +80,7 @@
                     <div class="table-td table-head width-200px"><text class="table-text">订单额</text></div>
                     <div class="table-td table-head width-200px"><text class="table-text">客单价</text></div>
                     <div class="table-td table-head width-200px"><text class="table-text">关闭单金额</text></div>
+                    <div class="table-td table-head width-200px"><text class="table-text">折扣额</text></div>
                     <div class="table-td table-head width-200px"><text class="table-text">日期</text></div>
                 </div>
                 <!-- @loadmore="getData" -->
@@ -84,10 +97,12 @@
                         <div class="table-td table-bottom width-200px"><text class="table-text">{{intSumPriceTotal}}</text></div>
                         <div class="table-td table-bottom width-200px"><text class="table-text">{{intPerPriceTotal }}</text></div>
                         <div class="table-td table-bottom width-200px"><text class="table-text">{{intClosePriceTotal }}</text></div>
+                        <div class="table-td table-bottom width-200px"><text class="table-text">{{intDisPriceTotal ? intDisPriceTotal : intOnlinePaymentDiscountsTotal }}</text></div>
                         <div class="table-td table-bottom width-200px"><text class="table-text">日期</text></div>
                     </cell>
                     <cell class="table-cell"
                           v-for="(item , key) in listData"
+                          @click="toDetail(item)"
                           :key="key">
                         <div class="table-td"><text class="table-text">{{item.DeliverName}}</text></div>
                         <div class="table-td width-100px"><text class="table-text">{{item.intUCount}}</text></div>
@@ -95,6 +110,7 @@
                         <div class="table-td width-200px"><text class="table-text">{{item.intSumPrice}}</text></div>
                         <div class="table-td width-200px"><text class="table-text">{{item.intPerPrice}}</text></div>
                         <div class="table-td width-200px"><text class="table-text">{{item.intClosePrice}}</text></div>
+                        <div class="table-td width-200px"><text class="table-text">{{item.intDisPrice ? item.intDisPrice : item.OnlinePaymentDiscounts}}</text></div>
                         <div class="table-td width-200px"><text class="table-text">{{item.orderDate}}</text></div>
                     </cell>
                 </list>
@@ -102,16 +118,31 @@
             </scroller>
 
         </div>
-        <!-- <div class="bottom-sum">
-            <div class="table-cell">
-                <div class="table-td table-bottom "><text class="table-text">汇总:</text></div>
-                <div class="table-td table-bottom width-100px"><text class="table-text">{{intUCountTotal}}</text></div>
-                <div class="table-td table-bottom width-100px"><text class="table-text">{{intOCountTotal}}</text></div>
-                <div class="table-td table-bottom width-200px"><text class="table-text">{{intSumPriceTotal}}</text></div>
-                <div class="table-td table-bottom width-200px"><text class="table-text">{{intPerPriceTotal }}</text></div>
-                <div class="table-td table-bottom width-200px"><text class="table-text">{{intClosePriceTotal }}</text></div>
-            </div>
-        </div> -->
+        <bmmask class="mask"
+                animation="transition"
+                position="top"
+                :duration="300"
+                ref="payType">
+            <bmpop class="modal-top">
+                <div class="pay-content">
+                    <div class="pay-title">
+                        <wxc-button text="确定"
+                                    type="blue"
+                                    size="big"
+                                    @wxcButtonClicked="wxcButtonClicked"></wxc-button>
+                    </div>
+                    <div class="pay-group">
+                        <scroller class="scroller"
+                                  :show-scrollbar="false"
+                                  loadmoreoffset="10">
+                            <wxc-checkbox-list ref="payList"
+                                               :list="productsCheckList"
+                                               @wxcCheckBoxListChecked="wxcCheckBoxListChecked"></wxc-checkbox-list>
+                        </scroller>
+                    </div>
+                </div>
+            </bmpop>
+        </bmmask>
     </div>
 </template>
 <script>
@@ -119,7 +150,7 @@ import datepick from "../_mods/datepick";
 import API from "Utils/api";
 import { accAdd } from "Utils/tool";
 const picker = weex.requireModule("picker");
-import { WxcCheckbox } from "weex-ui";
+import { WxcCheckbox, WxcCheckboxList, WxcButton } from "weex-ui";
 function checkNumber(theObj) {
     var reg = /^[0-9]+.?[0-9]*$/;
     if (reg.test(theObj)) {
@@ -130,7 +161,9 @@ function checkNumber(theObj) {
 export default {
     components: {
         datepick,
-        WxcCheckbox
+        WxcCheckboxList,
+        WxcCheckbox,
+        WxcButton
     },
     data() {
         return {
@@ -145,6 +178,8 @@ export default {
             intSumPriceTotal: 0,
             intPerPriceTotal: 0,
             intClosePriceTotal: 0,
+            intDisPriceTotal: 0,
+            intOnlinePaymentDiscountsTotal: 0,
             selectDeliverData: {
                 RealName: "全部"
             },
@@ -154,17 +189,20 @@ export default {
             selectProductionData: {
                 strName: "全部"
             },
+            selectRemindTypeData: {
+                strName: "全部"
+            },
             productionList: [
                 {
                     strName: "全部"
                 },
                 {
                     strName: "已审",
-                    value: 1
+                    Id: 1
                 },
                 {
                     strName: "未审",
-                    value: 0
+                    Id: 0
                 }
             ],
             selectOrderStatusData: {
@@ -176,31 +214,61 @@ export default {
                 },
                 {
                     strName: "待付款",
-                    value: 1
+                    Id: 1
                 },
                 {
                     strName: "待发货",
-                    value: 2
+                    Id: 2
                 },
                 {
                     strName: "待收货",
-                    value: 3
+                    Id: 3
                 },
                 {
                     strName: "交易完成",
-                    value: 5
+                    Id: 5
                 },
                 {
                     strName: "已关闭",
-                    value: 4
+                    Id: 4
+                }
+            ],
+            remindTypeList: [
+                {
+                    strName: "全部"
+                },
+                {
+                    strName: "印捷配送",
+                    Id: 3
+                },
+                {
+                    strName: "代发快递",
+                    Id: 1
+                },
+                {
+                    strName: "自提",
+                    Id: 2
+                },
+
+                {
+                    strName: "代发物流",
+                    Id: 5
+                },
+                {
+                    strName: "商家直邮",
+                    Id: 0
                 }
             ],
             deliverList: [],
             productsList: [],
+            productsCheckList: [],
             index: -1,
-            index2: -1,
+            index2: 0,
             index3: 0,
-            index4: 0
+            index4: 0,
+            btnStyle: {
+                position: "absolute"
+            }
         };
     },
     computed: {
@@ -225,14 +293,9 @@ export default {
             this.init(resData);
         });
     },
-    mounted() {
-        var _this = this;
-        this.$event.on("paySuccess", params => {
-            _this.selectAllStatu = false;
-            _this.getData();
-        });
-    },
+    mounted() {},
     methods: {
+        // 获取数据 onrefreshState是下拉刷新
         async getData(onrefreshState) {
             const _this = this;
             let param = {
@@ -240,9 +303,11 @@ export default {
                 strSysMac: "30-5A-3A-E4-4F-14",
                 strSysCode: "YJAPP",
                 strAuthor: "YJ"
+                // UserId: this.userInfo.Id
             };
 
             param = Object.assign(this.param, param);
+            // 做权限控制
             if (this.userInfo.RoleId == 1 || this.userInfo.RoleId == 4) {
             } else {
                 if (this.userInfo.RoleId == 8 || this.userInfo.RoleId == 13) {
@@ -255,32 +320,47 @@ export default {
                     });
                 }
             }
+            // 选择业务员
             if (this.selectDeliverData.RealName != "全部") {
                 param = Object.assign(param, {
                     SalesmanId: this.selectDeliverData.Id
                 });
             }
 
+            // 选择产品类别
             if (this.selectProductData.strName != "全部") {
                 param = Object.assign(param, {
                     qCode: this.selectProductData.Id
                 });
+            } else {
+                delete param["qCode"];
             }
 
-            if(this.selectProductionData.strName != '全部') {
-                param = Object.assign(param , {
-                    "Production" : this.selectProductionData.value
-                })
+            // 选择审核
+            if (this.selectProductionData.strName != "全部") {
+                param = Object.assign(param, {
+                    Production: this.selectProductionData.Id
+                });
             } else {
-                delete param['Production']
+                delete param["Production"];
             }
 
-            if(this.selectOrderStatusData.strName != '全部') {
-                param = Object.assign(param , {
-                    "OrderStatus" : this.selectOrderStatusData.value
-                })
+            // 订单状态
+            if (this.selectOrderStatusData.strName != "全部") {
+                param = Object.assign(param, {
+                    OrderStatus: this.selectOrderStatusData.Id
+                });
             } else {
-                delete param['OrderStatus']
+                delete param["OrderStatus"];
+            }
+
+            // 配送类型
+            if (this.selectRemindTypeData.strName != "全部") {
+                param = Object.assign(param, {
+                    Remindtype: this.selectRemindTypeData.Id
+                });
+            } else {
+                delete param["Remindtype"];
             }
 
             if (onrefreshState) {
@@ -288,7 +368,7 @@ export default {
                 this.$notice.loading.show("正在加载");
             }
             var RES;
-            console.log(param);
+            console.log(JSON.stringify(param));
 
             if (this.userInfo.RoleId == 8 || this.userInfo.RoleId == 13) {
                 RES = await API.get_OrderSumManagerDeliver_YSH(param);
@@ -297,11 +377,13 @@ export default {
             }
             this.listData = [];
             var DGDATA = RES.DATA;
+            // 现将统计全部归零
             this.intUCountTotal = 0;
             this.intOCountTotal = 0;
             this.intSumPriceTotal = 0;
             this.intPerPriceTotal = 0;
             this.intClosePriceTotal = 0;
+            this.intDisPriceTotal = 0;
             if (DGDATA.length != 0) {
                 var newData = [];
                 DGDATA.map(item => {
@@ -325,8 +407,18 @@ export default {
                         this.intClosePriceTotal,
                         item.intClosePrice
                     );
+                    this.intDisPriceTotal = accAdd(
+                        this.intDisPriceTotal,
+                        item.intDisPrice
+                    );
+                    this.intOnlinePaymentDiscountsTotal = accAdd(
+                        this.intOnlinePaymentDiscountsTotal,
+                        item.OnlinePaymentDiscounts
+                    )
                 });
                 this.intSumPriceTotal = this.intSumPriceTotal.toFixed(2);
+                this.intClosePriceTotal = this.intClosePriceTotal.toFixed(2);
+                this.intOnlinePaymentDiscountsTotal = this.intOnlinePaymentDiscountsTotal.toFixed(2);
                 this.intPerPriceTotal = (
                     this.intPerPriceTotal / DGDATA.length
                 ).toFixed(2);
@@ -340,6 +432,89 @@ export default {
                 this.$refs["list"].refreshEnd();
             } else {
                 this.$notice.loading.hide();
+            }
+        },
+        async toDetail(item) {
+            this.$notice.loading.show("正在加载");
+            let param = {
+                key: "RyAkcFaz6KCKdW06EQKFHNEISQDDA",
+                strSysMac: "30-5A-3A-E4-4F-14",
+                strSysCode: "YJAPP",
+                strAuthor: "YJ",
+                dStartDate: item.orderDate
+                    ? item.orderDate
+                    : this.param.dStartDate,
+                dEndDate: item.orderDate ? item.orderDate : this.param.dEndDate
+            };
+            let deliverId = "";
+            this.deliverList.map(u => {
+                if (u.RealName == item.DeliverName) {
+                    deliverId = u.Id;
+                }
+            });
+
+            // 选择业务员
+            param = Object.assign(param, {
+                SalesmanId: deliverId
+            });
+
+            // 选择产品类别
+            if (this.selectProductData.strName != "全部") {
+                param = Object.assign(param, {
+                    qCode: this.selectProductData.Id
+                });
+            } else {
+                delete param["qCode"];
+            }
+
+            // 选择审核
+            if (this.selectProductionData.strName != "全部") {
+                param = Object.assign(param, {
+                    Production: this.selectProductionData.Id
+                });
+            } else {
+                delete param["Production"];
+            }
+
+            // 订单状态
+            if (this.selectOrderStatusData.strName != "全部") {
+                param = Object.assign(param, {
+                    OrderStatus: this.selectOrderStatusData.Id
+                });
+            } else {
+                delete param["OrderStatus"];
+            }
+
+            // 配送类型
+            if (this.selectRemindTypeData.strName != "全部") {
+                param = Object.assign(param, {
+                    Remindtype: this.selectRemindTypeData.Id
+                });
+            } else {
+                delete param["Remindtype"];
+            }
+
+            let { DATA } = await API.get_OrderManagerDetail_YSH(param);
+
+            this.$notice.loading.hide();
+            if (this.isDeliver) {
+                this.$router.open({
+                    name: "performanceDetail",
+                    type: "PUSH",
+                    params: {
+                        total: item,
+                        listItem: DATA
+                    }
+                });
+            } else {
+                this.$router.open({
+                    name: "performanceAdminDetail",
+                    type: "PUSH",
+                    params: {
+                        total: item,
+                        listItem: DATA
+                    }
+                });
             }
         },
         init(param) {
@@ -410,26 +585,44 @@ export default {
             );
         },
         selectProduct() {
-            var items = [];
-            if (items.length === 0) {
-                // items.push("全部")
+            this.productsCheckList = [];
+            this.productsCheckList = this.productsList.map(item => {
+                return {
+                    title: item.strName,
+                    value: item.Id,
+                    checked: false
+                };
+            });
+            this.$refs["payType"].show();
+        },
+        wxcCheckBoxListChecked(e) {
+            console.log(e);
+
+            if (e.checkedList.length) {
+                let strName = "";
+                let Id = "";
                 this.productsList.map(item => {
-                    items.push(item.strName);
+                    e.checkedList.map((i, index) => {
+                        if (i === item.Id) {
+                            strName += item.strName + ",";
+                            Id += item.Id + ",";
+                        }
+                    });
                 });
+                this.selectProductData = {
+                    strName: strName.substring(0, strName.lastIndexOf(",")),
+                    Id: Id.substring(0, Id.lastIndexOf(","))
+                };
+            } else {
+                this.selectProductData = {
+                    strName: "全部",
+                    Id: ""
+                };
             }
-            picker.pick(
-                {
-                    index: this.index2,
-                    items
-                },
-                event => {
-                    if (event.result === "success") {
-                        this.selectProductData = this.productsList[event.data];
-                        this.index2 = event.data;
-                        this.getData();
-                    }
-                }
-            );
+        },
+        wxcButtonClicked() {
+            this.$refs["payType"].hide();
+            this.getData();
         },
         selectProduction() {
             var items = [];
@@ -479,6 +672,30 @@ export default {
                 }
             );
         },
+        selectRemindType() {
+            var items = [];
+            if (items.length === 0) {
+                this.remindTypeList.map(item => {
+                    items.push(item.strName);
+                });
+            }
+
+            picker.pick(
+                {
+                    index: this.index2,
+                    items
+                },
+                event => {
+                    if (event.result === "success") {
+                        this.selectRemindTypeData = this.remindTypeList[
+                            event.data
+                        ];
+                        this.index2 = event.data;
+                        this.getData();
+                    }
+                }
+            );
+        },
         setNav() {
             if (this.userInfo.RoleId === 1 || this.userInfo.RoleId === 4) {
                 // this.$navigator.setRightItem(
@@ -522,20 +739,6 @@ export default {
                 var DATA = RES.dgData;
             }
             this.deliverList = DATA;
-        },
-        toDetail(item, type) {
-            var par = {};
-            par = Object.assign(par, this.param);
-            if (type) {
-                par = Object.assign(par, type);
-            }
-            par = Object.assign(par, { "@DistributorId": item.Id });
-            par = Object.assign(par, { name: item.RealName });
-            this.$router.open({
-                name: "echartdetail",
-                type: "PUSH",
-                params: par
-            });
         }
     }
 };
@@ -545,9 +748,7 @@ export default {
 .page {
     height: auto;
 }
-.scroller {
-    height: auto;
-}
+
 .search-bar {
     border-bottom-width: 1px;
     border-bottom-style: solid;
@@ -611,31 +812,7 @@ export default {
     width: 750px;
     height: 100px;
 }
-.pay-content {
-    margin-left: 84px;
-    margin-top: 312px;
-    width: 580px;
-    height: 300px;
-    background-color: #fff;
-    border-radius: 4px;
-}
-.pay-title {
-    height: 105px;
-    justify-content: center;
-    padding-left: 48px;
-    border-bottom-width: 1px;
-    border-bottom-style: dotted;
-    border-bottom-color: #cccccc;
-}
-.pay-group {
-    flex-direction: row;
-    padding-top: 52px;
-    justify-content: center;
-}
-.pay-type {
-    width: 215px;
-    height: 66px;
-}
+
 .example {
     position: absolute;
     right: 0px;
@@ -658,12 +835,12 @@ export default {
     margin-left: 10px;
 }
 .table {
-    width: 1150px;
+    width: 1350px;
     /* min-height: 750px; */
 }
 .table-cell {
     position: relative;
-    width: 1150px;
+    width: 1350px;
     flex-direction: row;
 }
 .table-td {
@@ -781,5 +958,44 @@ export default {
 .table-bottom {
     height: 75px;
     background-color: yellow;
+}
+.mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-top {
+    align-items: flex-start;
+}
+.pay-content {
+    margin-left: 84px;
+    margin-top: 312px;
+    width: 580px;
+    height: 600px;
+    background-color: #fff;
+    border-radius: 4px;
+}
+.pay-title {
+    height: 105px;
+
+    justify-content: center;
+    padding-left: 120px;
+    border-bottom-width: 1px;
+    border-bottom-style: dotted;
+    border-bottom-color: #cccccc;
+}
+.pay-group {
+    flex-direction: row;
+    /* width: 350px; */
+    /* padding-top: 52px; */
+    justify-content: center;
+}
+.scroller {
+    width: 550px;
+    height: 700px;
 }
 </style>

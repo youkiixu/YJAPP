@@ -114,6 +114,14 @@ export default {
     'areaOrderDetail': {
         title: '区域订单详情',
         url: '/pages/yjapp/area-order/detail.js'
+    },
+    'performanceDetail': {
+        title: '业绩详情',
+        url: '/pages/yjapp/performance/detail.js'
+    },
+    'performanceAdminDetail': {
+        title: '业绩详情',
+        url: '/pages/yjapp/performance/adminDetail.js'
     }
 
 
