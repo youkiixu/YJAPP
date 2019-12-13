@@ -37,7 +37,12 @@ module.exports = {
         'js/pages/yjapp/area-order/detail.vue',
         'js/pages/yjapp/performance/list.vue',
         'js/pages/yjapp/performance/detail.vue',
-        'js/pages/yjapp/performance/adminDetail.vue'
+        'js/pages/yjapp/performance/adminDetail.vue',
+        'js/pages/yjapp/performance/orderDetail.vue',
+        'js/pages/yjapp/performance-growth/list.vue',
+        'js/pages/yjapp/performance-growth/detail.vue',
+        'js/pages/yjapp/performance-growth/adminDetail.vue',
+        'js/pages/yjapp/performance-growth/orderDetail.vue'
     ],
     'alias': {
         'Components': 'js/components',

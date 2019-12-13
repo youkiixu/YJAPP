@@ -2,7 +2,7 @@ import axios from './axios.js'
 
 
 let api = {
-	App_Version : '3.8',
+	App_Version : '4.4',
 	YJ_GETORDER : (data) => axios.getAjaxData(data , 'search' , 'YJApp_OrderInfo'),
 	YJ_ENTER  : (data) => axios.getAjaxData(data , 'enterIn'),
 	YJ_SEARCH : (data) => axios.getAjaxData(data , 'search'),
@@ -49,6 +49,8 @@ let api = {
     get_OrderSumManagerDeliver_YSH: (data) => axios.getAjaxData(data ,'cSearch' , 'OrderSumManagerDeliver_YSH'),
     //业务员业绩统计查询
     get_OrderManagerDetail_YSH: (data) => axios.getAjaxData(data ,'cSearch' , 'OrderManagerDetail_YSH'),
+    // 业绩排行
+    get_DayRise_YSH: (data) => axios.getAjaxData(data ,'DayRise'),
 	// 获取APP操作记录
 	Get_AppRecord: (data) => axios.getAjaxData(data , 'search' , 'Get_AppRecord'),
 	// getUncollectedOrder , getPaycollectOrder , getAllOrder 根据业务员Id获取已收款， 未收款 ， 所有订单
@@ -144,7 +146,16 @@ let api = {
 	    	break;
 	    	case 'week' :
 	    		return forweek
-			break;
+            break;
+            case 'month' :
+                    var nowdate = new Date();
+                var month=nowdate.getMonth()+1;
+                month =(month<10 ? "0"+month:month);
+                return month
+                break;
+            case 'year' :
+                return nowdate.getFullYear()
+                break;
 			case 'beginMonth':
 				const monthOne = fornow.split('-')
 				return monthOne[0] + '-' + monthOne[1] + '-' + '01'

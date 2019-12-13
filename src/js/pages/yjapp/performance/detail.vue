@@ -1,14 +1,14 @@
 <template>
 
     <div>
-        <wxc-cell label="统计"
+        <!-- <wxc-cell label="统计"
                   :title="totalDate"
                   @wxcCellClicked="getParams">
         </wxc-cell>
         <wxc-cell label="业务员"
                   :title="total.DeliverName"
                   @wxcCellClicked="getParams">
-        </wxc-cell>
+        </wxc-cell> -->
         <wxc-cell label="会员数"
                   :title="total.intUCount "
                   @wxcCellClicked="getParams">
@@ -21,39 +21,42 @@
                   :title="total.intSumPrice "
                   @wxcCellClicked="getParams">
         </wxc-cell>
-        <wxc-cell label="客单价"
+        <!-- <wxc-cell label="客单价"
                   :title="total.intPerPrice  "
                   @wxcCellClicked="getParams">
-        </wxc-cell>
+        </wxc-cell> -->
         <wxc-cell label="关闭单金额"
                   :title="total.intClosePrice "
                   @wxcCellClicked="getParams">
         </wxc-cell>
-        <wxc-cell label="折扣额"
+        <!-- <wxc-cell label="折扣额"
                   :title="total.intDisPrice  "
                   @wxcCellClicked="getParams">
-        </wxc-cell>
+        </wxc-cell> -->
         <scroller scroll-direction="horizontal"
                   class="table"
                   :style="{height: `${deviceHeight}px`}">
+            <div class="table-cell">
+                <div class="table-td table-head width-200px"><text class="table-text">日期</text></div>
+                <div class="table-td table-head width-200px"><text class="table-text">订单号</text></div>
+                <div class="table-td table-head"><text class="table-text">业务员</text></div>
+                <div class="table-td table-head width-200px"><text class="table-text">客户</text></div>
+                <div class="table-td table-head width-100px"><text class="table-text">会员号</text></div>
+                <div class="table-td table-head width-200px"><text class="table-text">产品</text></div>
+                <div class="table-td table-head width-200px"><text class="table-text">总价</text></div>
+                <div class="table-td table-head width-100px"><text class="table-text">运费</text></div>
+                <div class="table-td table-head width-100px"><text class="table-text">折扣</text></div>
+                <div class="table-td table-head width-200px"><text class="table-text">订单状态</text></div>
+            </div>
             <list class="bui-list"
                   ref="list"
                   loadmoreoffset="2">
-                <cell class="table-cell">
-                    <div class="table-td table-head width-200px"><text class="table-text">日期</text></div>
-                    <div class="table-td table-head"><text class="table-text">业务员</text></div>
-                    <div class="table-td table-head width-200px"><text class="table-text">客户</text></div>
-                    <div class="table-td table-head width-100px"><text class="table-text">会员号</text></div>
-                    <div class="table-td table-head width-200px"><text class="table-text">产品</text></div>
-                    <div class="table-td table-head width-200px"><text class="table-text">总价</text></div>
-                    <div class="table-td table-head width-100px"><text class="table-text">运费</text></div>
-                    <div class="table-td table-head width-100px"><text class="table-text">折扣</text></div>
-                    <div class="table-td table-head width-200px"><text class="table-text">订单状态</text></div>
-                </cell>
                 <cell class="table-cell"
                       v-for="(item , key) in listItem"
+                      @click="toDetail(item)"
                       :key="key">
                     <div class="table-td width-200px"><text class="table-text">{{item.OrderDate}}</text></div>
+                    <div class="table-td width-200px"><text class="table-text">{{item.Id}}</text></div>
                     <div class="table-td"><text class="table-text">{{item.DeliverName}}</text></div>
                     <div class="table-td width-200px"><text class="table-text">{{item.Column1}}</text></div>
                     <div class="table-td width-100px"><text class="table-text">{{item.UserId}}</text></div>
@@ -93,6 +96,7 @@ export default {
                 params.listItem[0].OrderDate +
                 " 至 " +
                 params.listItem[len - 1].OrderDate;
+            this.setNav();
         }
     },
     computed: {
@@ -107,10 +111,23 @@ export default {
     methods: {
         toDetail(item) {
             this.$router.open({
-                name: "performanceDetail",
+                name: "performanceOrderDetail",
                 type: "PUSH",
                 params: item
             });
+        },
+        setNav() {
+            this.$navigator.setCenterItem(
+                {
+                    text: this.totalDate, // 展示的文字 (和图片 二选一)
+                    textColor: "", // 文字颜色 (默认为白色)
+                    fontSize: "30", // 字号（默认32px）
+                    fontWeight: "normal" // 是否加粗（默认不加粗）
+                },
+                () => {
+                    // 点击回调
+                }
+            );
         }
     },
     mounted() {},
@@ -140,12 +157,12 @@ export default {
     justify-content: center;
 }
 .table {
-    width: 1450px;
+    width: 1650px;
     /* min-height: 750px; */
 }
 .table-cell {
     position: relative;
-    width: 1450px;
+    width: 1650px;
     flex-direction: row;
 }
 .table-td {

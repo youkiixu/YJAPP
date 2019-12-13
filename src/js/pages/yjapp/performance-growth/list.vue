@@ -2,20 +2,41 @@
     <div class="win">
         <div class="page">
             <div class="search-bar">
-                <search-bar :showScanBtn="true"
+                <!-- <search-bar :showScanBtn="true"
                             v-if="!isDeliver"
                             :searchType="searchType"
                             @inputChange="inputChange"
                             @searchClick="searchClick">
-                </search-bar>
-                <datepick ref="datePick"
+                </search-bar> -->
+                <!-- <datepick ref="datePick"
                           :beginDate="param['@StartDate']"
                           :endDate="param['@EndDate']"
                           init
                           @selectTime="selectTime"
                           @startDateFinish="startDateFinish"
-                          @endDateFinish="endDateFinish"></datepick>
+                          @endDateFinish="endDateFinish"></datepick> -->
                 <div class="search-bar-top">
+                    <div class="search-bar-left"
+                         @click="selectYear">
+                        <div class="search-text-box">
+                            <text class="search-bar-left-text">年: </text>
+                            <text class="search-bar-right-text">{{param.intYear}}</text>
+                            <image src="http://yj.kiy.cn/Content/Images/App/assets/la.png"
+                                   class="search-bar-left-icon"></image>
+                        </div>
+                    </div>
+
+                    <div class="search-bar-left"
+                         @click="selectMonth">
+                        <div class="search-text-box">
+                            <text class="search-bar-left-text">月: </text>
+                            <text class="search-bar-right-text">{{param.intMonth}}</text>
+                            <image src="http://yj.kiy.cn/Content/Images/App/assets/la.png"
+                                   class="search-bar-left-icon"></image>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="search-bar-top">
                     <div class="search-bar-left"
                          @click="selectOrderStatus">
                         <div class="search-text-box">
@@ -35,7 +56,7 @@
                                    class="search-bar-left-icon"></image>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="search-bar-top">
                     <div class="search-bar-left"
                          @click="selectProduct">
@@ -91,14 +112,14 @@
                       :style="{height: `${deviceHeight}px`}">
 
                 <div class="table-cell">
-                    <div class="table-td table-head"><text class="table-text">业务员</text></div>
-                    <div class="table-td table-head width-100px"><text class="table-text">会员数</text></div>
-                    <div class="table-td table-head width-100px"><text class="table-text">订单数</text></div>
+                    <div class="table-td table-head width-350px"><text class="table-text">业务员</text></div>
+                    <div class="table-td table-head width-400px"><text class="table-text">订单金额</text></div>
+                    <!-- <div class="table-td table-head width-100px"><text class="table-text">订单数</text></div>
                     <div class="table-td table-head width-200px"><text class="table-text">订单额</text></div>
                     <div class="table-td table-head width-200px"><text class="table-text">客单价</text></div>
                     <div class="table-td table-head width-200px"><text class="table-text">关闭单金额</text></div>
                     <div class="table-td table-head width-200px"><text class="table-text">折扣额</text></div>
-                    <div class="table-td table-head width-200px"><text class="table-text">日期</text></div>
+                    <div class="table-td table-head width-200px"><text class="table-text">日期</text></div> -->
                 </div>
                 <!-- @loadmore="getData" -->
                 <list class="bui-list"
@@ -108,27 +129,27 @@
                       @refresh="getData"
                       loadmoreoffset="2">
                     <cell class="table-cell">
-                        <div class="table-td table-bottom "><text class="table-text">汇总:</text></div>
-                        <div class="table-td table-bottom width-100px"><text class="table-text">{{intUCountTotal}}</text></div>
-                        <div class="table-td table-bottom width-100px"><text class="table-text">{{intOCountTotal}}</text></div>
-                        <div class="table-td table-bottom width-200px"><text class="table-text">{{intSumPriceTotal}}</text></div>
+                        <div class="table-td table-bottom width-350px"><text class="table-text">汇总:</text></div>
+                        <div class="table-td table-bottom width-400px"><text class="table-text">{{intUCountTotal}}</text></div>
+                        <!-- <div class="table-td table-bottom width-100px"><text class="table-text">{{intOCountTotal}}</text></div> -->
+                        <!-- <div class="table-td table-bottom width-200px"><text class="table-text">{{intSumPriceTotal}}</text></div>
                         <div class="table-td table-bottom width-200px"><text class="table-text">{{intPerPriceTotal }}</text></div>
                         <div class="table-td table-bottom width-200px"><text class="table-text">{{intClosePriceTotal }}</text></div>
                         <div class="table-td table-bottom width-200px"><text class="table-text">{{intDisPriceTotal ? intDisPriceTotal : intOnlinePaymentDiscountsTotal }}</text></div>
-                        <div class="table-td table-bottom width-200px"><text class="table-text">日期</text></div>
+                        <div class="table-td table-bottom width-200px"><text class="table-text">日期</text></div> -->
                     </cell>
+                          <!-- @click="toDetail(item)" -->
                     <cell class="table-cell"
                           v-for="(item , key) in listData"
-                          @click="toDetail(item)"
                           :key="key">
-                        <div class="table-td"><text class="table-text">{{item.DeliverName}}</text></div>
-                        <div class="table-td width-100px"><text class="table-text">{{item.intUCount}}</text></div>
-                        <div class="table-td width-100px"><text class="table-text">{{item.intOCount}}</text></div>
+                        <div class="table-td width-350px"><text class="table-text">{{item.strName}}</text></div>
+                        <div class="table-td width-400px"><text class="table-text">{{item.intSumPrice}}</text></div>
+                        <!-- <div class="table-td width-100px"><text class="table-text">{{item.intOCount}}</text></div>
                         <div class="table-td width-200px"><text class="table-text">{{item.intSumPrice}}</text></div>
                         <div class="table-td width-200px"><text class="table-text">{{item.intPerPrice}}</text></div>
                         <div class="table-td width-200px"><text class="table-text">{{item.intClosePrice}}</text></div>
                         <div class="table-td width-200px"><text class="table-text">{{item.intDisPrice ? item.intDisPrice : item.OnlinePaymentDiscounts}}</text></div>
-                        <div class="table-td width-200px"><text class="table-text">{{item.orderDate}}</text></div>
+                        <div class="table-td width-200px"><text class="table-text">{{item.orderDate}}</text></div> -->
                     </cell>
                 </list>
 
@@ -294,6 +315,8 @@ export default {
                     Id: 0
                 }
             ],
+            yearList: [2019,2020,2021,2022,2023,2024,2025],
+            monthList: [1,2,3,4,5,6,7,8,9,10,11,12],
             deliverList: [],
             productsList: [],
             productsCheckList: [],
@@ -318,7 +341,7 @@ export default {
             return (
                 (weex.config.env.deviceHeight / weex.config.env.deviceWidth) *
                     750 -
-                580
+                380
             );
         },
         isDeliver() {
@@ -346,24 +369,24 @@ export default {
 
             param = Object.assign(this.param, param);
             // 做权限控制
-            if (this.userInfo.RoleId == 1 || this.userInfo.RoleId == 4) {
-            } else {
-                if (this.userInfo.RoleId == 8 || this.userInfo.RoleId == 13) {
-                    param = Object.assign(param, {
-                        SalesmanId: this.userInfo.adminId
-                    });
-                } else {
-                    param = Object.assign(param, {
-                        IdManager: this.userInfo.adminId
-                    });
-                }
-            }
+            // if (this.userInfo.RoleId == 1 || this.userInfo.RoleId == 4) {
+            // } else {
+            //     if (this.userInfo.RoleId == 8 || this.userInfo.RoleId == 13) {
+            //         param = Object.assign(param, {
+            //             SalesmanId: this.userInfo.adminId
+            //         });
+            //     } else {
+            //         param = Object.assign(param, {
+            //             IdManager: this.userInfo.adminId
+            //         });
+            //     }
+            // }
             // 选择业务员
-            if (this.selectDeliverData.RealName != "全部") {
-                param = Object.assign(param, {
-                    SalesmanId: this.selectDeliverData.Id
-                });
-            }
+            // if (this.selectDeliverData.RealName != "全部") {
+            //     param = Object.assign(param, {
+            //         SalesmanId: this.selectDeliverData.Id
+            //     });
+            // }
 
             // 选择产品类别
             if (this.selectProductData.strName != "全部") {
@@ -375,13 +398,13 @@ export default {
             }
 
             // 选择审核
-            if (this.selectProductionData.strName != "全部") {
-                param = Object.assign(param, {
-                    Production: this.selectProductionData.Id
-                });
-            } else {
-                delete param["Production"];
-            }
+            // if (this.selectProductionData.strName != "全部") {
+            //     param = Object.assign(param, {
+            //         Production: this.selectProductionData.Id
+            //     });
+            // } else {
+            //     delete param["Production"];
+            // }
 
             // 订单状态
             if (this.selectOrderStatusData.strName != "全部") {
@@ -395,10 +418,10 @@ export default {
             //是否新会员
             if(this.selectbNewData.strName != '否') {
                 param = Object.assign(param, {
-                    bNews: this.selectbNewData.Id
+                    bNew: this.selectbNewData.Id
                 });
             } else {
-                delete param['bNews']
+                delete param['bNew']
             }
 
             if(this.searchValue != '') {
@@ -426,11 +449,11 @@ export default {
             var RES;
             console.log(JSON.stringify(param));
 
-            if (this.userInfo.RoleId == 8 || this.userInfo.RoleId == 13) {
-                RES = await API.get_OrderSumManagerDeliver_YSH(param);
-            } else {
-                RES = await API.get_OrderSumManager_YSH(param);
-            }
+            // if (this.userInfo.RoleId == 8 || this.userInfo.RoleId == 13) {
+                RES = await API.get_DayRise_YSH(param);
+            // } else {
+            //     RES = await API.get_OrderSumManager_YSH(param);
+            // }
             this.listData = [];
             var DGDATA = RES.DATA;
             // 现将统计全部归零
@@ -445,39 +468,39 @@ export default {
                 DGDATA.map(item => {
                     this.intUCountTotal = accAdd(
                         this.intUCountTotal,
-                        item.intUCount
-                    );
-                    this.intOCountTotal = accAdd(
-                        this.intOCountTotal,
-                        item.intOCount
-                    );
-                    this.intSumPriceTotal = accAdd(
-                        this.intSumPriceTotal,
                         item.intSumPrice
                     );
-                    this.intPerPriceTotal = accAdd(
-                        this.intPerPriceTotal,
-                        item.intPerPrice
-                    );
-                    this.intClosePriceTotal = accAdd(
-                        this.intClosePriceTotal,
-                        item.intClosePrice
-                    );
-                    this.intDisPriceTotal = accAdd(
-                        this.intDisPriceTotal,
-                        item.intDisPrice
-                    );
-                    this.intOnlinePaymentDiscountsTotal = accAdd(
-                        this.intOnlinePaymentDiscountsTotal,
-                        item.OnlinePaymentDiscounts
-                    )
+                    // this.intOCountTotal = accAdd(
+                    //     this.intOCountTotal,
+                    //     item.intOCount
+                    // );
+                    // this.intSumPriceTotal = accAdd(
+                    //     this.intSumPriceTotal,
+                    //     item.intSumPrice
+                    // );
+                    // this.intPerPriceTotal = accAdd(
+                    //     this.intPerPriceTotal,
+                    //     item.intPerPrice
+                    // );
+                    // this.intClosePriceTotal = accAdd(
+                    //     this.intClosePriceTotal,
+                    //     item.intClosePrice
+                    // );
+                    // this.intDisPriceTotal = accAdd(
+                    //     this.intDisPriceTotal,
+                    //     item.intDisPrice
+                    // );
+                    // this.intOnlinePaymentDiscountsTotal = accAdd(
+                    //     this.intOnlinePaymentDiscountsTotal,
+                    //     item.OnlinePaymentDiscounts
+                    // )
                 });
-                this.intSumPriceTotal = this.intSumPriceTotal.toFixed(2);
-                this.intClosePriceTotal = this.intClosePriceTotal.toFixed(2);
-                this.intOnlinePaymentDiscountsTotal = this.intOnlinePaymentDiscountsTotal.toFixed(2);
-                this.intPerPriceTotal = (
-                    this.intPerPriceTotal / DGDATA.length
-                ).toFixed(2);
+                // this.intSumPriceTotal = this.intSumPriceTotal.toFixed(2);
+                // this.intClosePriceTotal = this.intClosePriceTotal.toFixed(2);
+                // this.intOnlinePaymentDiscountsTotal = this.intOnlinePaymentDiscountsTotal.toFixed(2);
+                // this.intPerPriceTotal = (
+                //     this.intPerPriceTotal / DGDATA.length
+                // ).toFixed(2);
                 this.listData = DGDATA;
             } else {
                 this.$notice.toast({
@@ -567,7 +590,7 @@ export default {
             this.$notice.loading.hide();
             if (this.isDeliver) {
                 this.$router.open({
-                    name: "performanceDetail",
+                    name: "performanceGrowthDetail",
                     type: "PUSH",
                     params: {
                         total: item,
@@ -576,7 +599,7 @@ export default {
                 });
             } else {
                 this.$router.open({
-                    name: "performanceAdminDetail",
+                    name: "performanceGrowthAdminDetail",
                     type: "PUSH",
                     params: {
                         total: item,
@@ -600,15 +623,15 @@ export default {
             );
             // 获取月头
             const dateFormate = {
-                startDate: API.get_date("beginMonth").split(" ")[0],
-                endDate: API.get_date("today")
+                intMonth: API.get_date("month"),
+                intYear: API.get_date("year")
             };
-            this.$refs["datePick"].searchDate["@beginDate"] =
-                dateFormate.startDate;
-            this.$refs["datePick"].searchDate["@endDate"] = dateFormate.endDate;
+            // this.$refs["datePick"].searchDate["@beginDate"] =
+            //     dateFormate.startDate;
+            // this.$refs["datePick"].searchDate["@endDate"] = dateFormate.endDate;
             this.param = Object.assign(this.param, {
-                dStartDate: dateFormate.startDate,
-                dEndDate: dateFormate.endDate
+                intMonth: dateFormate.intMonth,
+                intYear: dateFormate.intYear
             });
             this.param = Object.assign(this.param, param.type);
 
@@ -652,6 +675,38 @@ export default {
                 }
             );
         },
+        selectYear() {
+            var items = this.yearList;
+            var index = this.yearList.indexOf(Number(this.param.intYear))
+            picker.pick(
+                {
+                    index: index,
+                    items
+                },
+                event => {
+                    if (event.result === "success") {
+                        this.param.intYear = this.yearList[event.data]
+                        this.getData();
+                    }
+                }
+            );
+        },
+        selectMonth() {
+            var items = this.monthList;
+            var index = this.monthList.indexOf(Number(this.param.intMonth))
+            picker.pick(
+                {
+                    index: index,
+                    items
+                },
+                event => {
+                    if (event.result === "success") {
+                        this.param.intMonth = this.monthList[event.data]
+                        this.getData();
+                    }
+                }
+            );
+        },
         selectProduct() {
             this.productsCheckList = [];
             this.productsCheckList = this.productsList.map(item => {
@@ -663,6 +718,7 @@ export default {
             });
             this.$refs["payType"].show();
         },
+
         wxcCheckBoxListChecked(e) {
             console.log(e);
 
@@ -933,12 +989,12 @@ export default {
     margin-left: 10px;
 }
 .table {
-    width: 1350px;
+    width: 750px;
     /* min-height: 750px; */
 }
 .table-cell {
     position: relative;
-    width: 1350px;
+    width: 750px;
     flex-direction: row;
 }
 .table-td {
@@ -969,6 +1025,12 @@ export default {
 }
 .width-100px {
     width: 100px;
+}
+.width-400px {
+    width: 400px;
+}
+.width-350px {
+    width: 350px;
 }
 .loading {
     width: 750;

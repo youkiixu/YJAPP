@@ -135,14 +135,11 @@ export default {
                     icon: 'http://yj.kiy.cn/Content/Images/App/assets/icon/营收报表.png',
                     name: 'performance'
                 },
-                // {
-                //     title: '已扫单',
-                //     icon: 'http://yj.kiy.cn/Content/Images/App/assets/icon/声音.png',
-                //     type: {
-                //         '@orderStatu': '10,50'
-                //     },
-                //     name: 'dis-list'
-                // }
+                {
+                    title: '业绩排行',
+                    icon: 'http://yj.kiy.cn/Content/Images/App/assets/icon/声音.png',
+                    name: 'performanceGrowth'
+                }
 
 
             ]

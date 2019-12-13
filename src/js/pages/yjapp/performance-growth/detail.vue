@@ -30,7 +30,7 @@
                   @wxcCellClicked="getParams">
         </wxc-cell>
         <!-- <wxc-cell label="折扣额"
-                  :title="total.OnlinePaymentDiscounts "
+                  :title="total.intDisPrice  "
                   @wxcCellClicked="getParams">
         </wxc-cell> -->
         <scroller scroll-direction="horizontal"
@@ -46,13 +46,11 @@
                 <div class="table-td table-head width-200px"><text class="table-text">总价</text></div>
                 <div class="table-td table-head width-100px"><text class="table-text">运费</text></div>
                 <div class="table-td table-head width-100px"><text class="table-text">折扣</text></div>
-                <div class="table-td table-head width-200px"><text class="table-text">配送类型</text></div>
                 <div class="table-td table-head width-200px"><text class="table-text">订单状态</text></div>
             </div>
             <list class="bui-list"
                   ref="list"
                   loadmoreoffset="2">
-
                 <cell class="table-cell"
                       v-for="(item , key) in listItem"
                       @click="toDetail(item)"
@@ -66,7 +64,6 @@
                     <div class="table-td width-200px"><text class="table-text">{{item.ProductTotalAmount}}</text></div>
                     <div class="table-td width-100px"><text class="table-text">{{item.Freight}}</text></div>
                     <div class="table-td width-100px"><text class="table-text">{{item.OnlinePaymentDiscounts}}</text></div>
-                    <div class="table-td width-200px"><text class="table-text">{{item.strRemindType}}</text></div>
                     <div class="table-td width-200px"><text class="table-text">{{item.strOrderStatus}}</text></div>
                 </cell>
             </list>
@@ -114,7 +111,7 @@ export default {
     methods: {
         toDetail(item) {
             this.$router.open({
-                name: "performanceOrderDetail",
+                name: "performanceGrowthOrderDetail",
                 type: "PUSH",
                 params: item
             });
@@ -160,12 +157,12 @@ export default {
     justify-content: center;
 }
 .table {
-    width: 1850px;
+    width: 1650px;
     /* min-height: 750px; */
 }
 .table-cell {
     position: relative;
-    width: 1850px;
+    width: 1650px;
     flex-direction: row;
 }
 .table-td {

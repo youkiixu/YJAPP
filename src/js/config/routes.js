@@ -107,13 +107,13 @@ export default {
         title: '区域订单',
         url: '/pages/yjapp/area-order/list.js'
     },
-    'performance': {
-        title: '业绩统计',
-        url: '/pages/yjapp/performance/list.js'
-    },
     'areaOrderDetail': {
         title: '区域订单详情',
         url: '/pages/yjapp/area-order/detail.js'
+    },
+    'performance': {
+        title: '业绩统计',
+        url: '/pages/yjapp/performance/list.js'
     },
     'performanceDetail': {
         title: '业绩详情',
@@ -122,6 +122,26 @@ export default {
     'performanceAdminDetail': {
         title: '业绩详情',
         url: '/pages/yjapp/performance/adminDetail.js'
+    },
+    'performanceOrderDetail': {
+        title: '业绩详情',
+        url: '/pages/yjapp/performance/orderDetail.js'
+    },
+    'performanceGrowth': {
+        title: '业绩排行',
+        url: '/pages/yjapp/performance-growth/list.js'
+    },
+    'performanceGrowthDetail': {
+        title: '业绩排行详情',
+        url: '/pages/yjapp/performance-growth/detail.js'
+    },
+    'performanceGrowthAdminDetail': {
+        title: '业绩排行详情',
+        url: '/pages/yjapp/performance-growth/adminDetail.js'
+    },
+    'performanceGrowthOrderDetail': {
+        title: '业绩排行详情',
+        url: '/pages/yjapp/performance-growth/orderDetail.js'
     }
 
 

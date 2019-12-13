@@ -33,12 +33,12 @@ axios.getAjaxData = (param , TYPE , strMethod , uid) => new Promise((resolve , r
 	if(strMethod) {
         paramData = Object.assign(paramData,{strMethod: strMethod})
     }
-	const data = Object.assign(
+	let data = Object.assign(
         {uid : uid || 'd3bd0809-8030-4843-9fed-48878edb2f6a'},
         {param : paramData}
     )
 
-    // console.log(JSON.stringify(data))
+    console.log(JSON.stringify(data))
     const en = encode(JSON.stringify(data))
 	bmAxios.fetch({
         url: axios.YJdomain + '/Admins/GetData/GetAjaxData',

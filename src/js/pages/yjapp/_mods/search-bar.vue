@@ -9,13 +9,14 @@
 			</div>
 
 			<div class="wxc-search-bar" slot="middle">
-				<input 
-				class="search-bar-input" 
-				v-model="value" 
-				return-key-type="search" 
-				:placeholder="placeholder" 
+				<input
+				class="search-bar-input"
+				v-model="value"
+				return-key-type="search"
+				:placeholder="placeholder"
 				@input="inputChange"
 				@blur="blurChange"
+                @focus="focusChange"
 				@change="searchClick"
 				/>
 			</div>
@@ -29,7 +30,7 @@
 
 <script>
 	import API from 'Utils/api'
-	
+
 	export default {
 		components: {   },
 		props: {
@@ -48,7 +49,7 @@
 			index: 0,
 		}),
 		created () {
-			
+
         },
         mounted () {
             if(this.showScanBtn) {
@@ -73,7 +74,7 @@
 					this.$emit('scanClick' , data)
 				}).catch (ex => {
 					console.log(ex)
-				}) 
+				})
 			},
 			searchClick (e) {
 				if(e.value === '' || e.value != undefined) {
@@ -83,9 +84,14 @@
 				} else {
 					this.$emit('searchClick' , this.value)
 				}
-				
-				
-			}
+
+
+            },
+            // focusChange() {
+            //     console.log('focusChange');
+
+            //     this.$emit('inputChange' , '')
+            // }
 		}
 	}
 

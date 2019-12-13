@@ -114,7 +114,7 @@ export default {
     methods: {
         toDetail(item) {
             this.$router.open({
-                name: "performanceOrderDetail",
+                name: "performanceGrowthOrderDetail",
                 type: "PUSH",
                 params: item
             });
