@@ -81,22 +81,21 @@
                 </div>
                 <div class="search-bar-top"
                      >
-                    <!-- <div class="search-bar-left"
-                         v-if="!isDeliver"
-                         @click="selectDeliver">
-                        <div class="search-text-box">
-                            <text class="search-bar-left-text">业务员: </text>
-                            <text class="search-bar-right-text">{{selectDeliverData.RealName}}</text>
-                            <image src="http://yj.kiy.cn/Content/Images/App/assets/la.png"
-                                   class="search-bar-left-icon"></image>
-                        </div>
-                    </div> -->
-
                     <div class="search-bar-left"
                          @click="selectbNew">
                         <div class="search-text-box">
                             <text class="search-bar-left-text">新会员: </text>
                             <text class="search-bar-right-text">{{selectbNewData.strName}}</text>
+                            <image src="http://yj.kiy.cn/Content/Images/App/assets/la.png"
+                                   class="search-bar-left-icon"></image>
+                        </div>
+                    </div>
+
+                    <div class="search-bar-left"
+                         @click="selectMemberManager">
+                        <div class="search-text-box">
+                            <text class="search-bar-left-text">经理: </text>
+                            <text class="search-bar-right-text">{{selectMemberManagerData.strManager}}</text>
                             <image src="http://yj.kiy.cn/Content/Images/App/assets/la.png"
                                    class="search-bar-left-icon"></image>
                         </div>
@@ -112,8 +111,22 @@
                       :style="{height: `${deviceHeight}px`}">
 
                 <div class="table-cell">
-                    <div class="table-td table-head width-350px"><text class="table-text">业务员</text></div>
+                    <div class="table-td table-head width-150px" v-if="showManger"><text class="table-text">业务员</text></div>
+                    <div class="table-td table-head width-350px" v-if="!showManger"><text class="table-text">业务员</text></div>
                     <div class="table-td table-head width-400px"><text class="table-text">订单金额</text></div>
+                    <div class="table-td table-head width-200px" v-if="showManger"><text class="table-text">区域经理</text></div>
+                    <!-- <div class="table-td table-head width-100px"><text class="table-text">订单数</text></div>
+                    <div class="table-td table-head width-200px"><text class="table-text">订单额</text></div>
+                    <div class="table-td table-head width-200px"><text class="table-text">客单价</text></div>
+                    <div class="table-td table-head width-200px"><text class="table-text">关闭单金额</text></div>
+                    <div class="table-td table-head width-200px"><text class="table-text">折扣额</text></div>
+                    <div class="table-td table-head width-200px"><text class="table-text">日期</text></div> -->
+                </div>
+                <div class="table-cell">
+                    <div class="table-td table-bottom  width-150px" v-if="showManger"><text class="table-text">汇总</text></div>
+                    <div class="table-td table-bottom  width-350px" v-if="!showManger"><text class="table-text">汇总</text></div>
+                    <div class="table-td table-bottom  width-400px"><text class="table-text">{{intUCountTotal}}</text></div>
+                    <div class="table-td table-bottom  width-200px" v-if="showManger"><text class="table-text">区域经理</text></div>
                     <!-- <div class="table-td table-head width-100px"><text class="table-text">订单数</text></div>
                     <div class="table-td table-head width-200px"><text class="table-text">订单额</text></div>
                     <div class="table-td table-head width-200px"><text class="table-text">客单价</text></div>
@@ -128,22 +141,14 @@
                       :showRefresh="true"
                       @refresh="getData"
                       loadmoreoffset="2">
-                    <cell class="table-cell">
-                        <div class="table-td table-bottom width-350px"><text class="table-text">汇总:</text></div>
-                        <div class="table-td table-bottom width-400px"><text class="table-text">{{intUCountTotal}}</text></div>
-                        <!-- <div class="table-td table-bottom width-100px"><text class="table-text">{{intOCountTotal}}</text></div> -->
-                        <!-- <div class="table-td table-bottom width-200px"><text class="table-text">{{intSumPriceTotal}}</text></div>
-                        <div class="table-td table-bottom width-200px"><text class="table-text">{{intPerPriceTotal }}</text></div>
-                        <div class="table-td table-bottom width-200px"><text class="table-text">{{intClosePriceTotal }}</text></div>
-                        <div class="table-td table-bottom width-200px"><text class="table-text">{{intDisPriceTotal ? intDisPriceTotal : intOnlinePaymentDiscountsTotal }}</text></div>
-                        <div class="table-td table-bottom width-200px"><text class="table-text">日期</text></div> -->
-                    </cell>
                           <!-- @click="toDetail(item)" -->
                     <cell class="table-cell"
                           v-for="(item , key) in listData"
                           :key="key">
-                        <div class="table-td width-350px"><text class="table-text">{{item.strName}}</text></div>
-                        <div class="table-td width-400px"><text class="table-text">{{item.intSumPrice}}</text></div>
+                        <div class="table-td width-150px" v-if="showManger"><text class="table-text">{{item.strName}}</text></div>
+                        <div class="table-td width-350px" v-if="!showManger"><text class="table-text">{{item.strName}}</text></div>
+                        <div class="table-td width-400px" ><text class="table-text">{{item.intSumPrice}}</text></div>
+                        <div class="table-td width-200px" v-if="showManger"><text class="table-text">{{item.strManager}}</text></div>
                         <!-- <div class="table-td width-100px"><text class="table-text">{{item.intOCount}}</text></div>
                         <div class="table-td width-200px"><text class="table-text">{{item.intSumPrice}}</text></div>
                         <div class="table-td width-200px"><text class="table-text">{{item.intPerPrice}}</text></div>
@@ -220,8 +225,8 @@ export default {
             intClosePriceTotal: 0,
             intDisPriceTotal: 0,
             intOnlinePaymentDiscountsTotal: 0,
-            selectDeliverData: {
-                RealName: "全部"
+            selectMemberManagerData: {
+                strManager: "全部"
             },
             selectProductData: {
                 strName: "全部"
@@ -317,10 +322,11 @@ export default {
             ],
             yearList: [2019,2020,2021,2022,2023,2024,2025],
             monthList: [1,2,3,4,5,6,7,8,9,10,11,12],
-            deliverList: [],
+            memberManagerList: [],
             productsList: [],
             productsCheckList: [],
-            index: -1,
+
+            index: 0,
             index2: 0,
             index3: 0,
             index4: 0,
@@ -329,7 +335,8 @@ export default {
                 position: "absolute"
             },
             searchType: "业务员",
-            searchValue: ""
+            searchValue: "",
+            showManger: false
         };
     },
     computed: {
@@ -381,12 +388,17 @@ export default {
             //         });
             //     }
             // }
-            // 选择业务员
-            // if (this.selectDeliverData.RealName != "全部") {
-            //     param = Object.assign(param, {
-            //         SalesmanId: this.selectDeliverData.Id
-            //     });
-            // }
+            // 选择城市经理
+
+            if (this.selectMemberManagerData.strManager != "全部") {
+                param = Object.assign(param, {
+                    'strManager': this.selectMemberManagerData.strManager,
+                    'IdManager': this.selectMemberManagerData.IdManager
+                });
+            } else {
+                delete param["strManager"];
+                delete param["IdManager"];
+            }
 
             // 选择产品类别
             if (this.selectProductData.strName != "全部") {
@@ -447,15 +459,28 @@ export default {
                 this.$notice.loading.show("正在加载");
             }
             var RES;
-            console.log(JSON.stringify(param));
+            // console.log(JSON.stringify(param));
 
             // if (this.userInfo.RoleId == 8 || this.userInfo.RoleId == 13) {
                 RES = await API.get_DayRise_YSH(param);
+                // console.log('111',RES);
+
             // } else {
             //     RES = await API.get_OrderSumManager_YSH(param);
             // }
             this.listData = [];
             var DGDATA = RES.DATA;
+            if(this.selectMemberManagerData.strManager != "全部") {
+                this.showManger = true
+            } else {
+                if(DGDATA[0].strManager) {
+                    this.showManger = true
+                } else {
+                this.showManger = false
+
+                }
+            }
+
             // 现将统计全部归零
             this.intUCountTotal = 0;
             this.intOCountTotal = 0;
@@ -654,11 +679,11 @@ export default {
             }
             this.getData();
         },
-        selectDeliver() {
+        selectMemberManager() {
             var items = [];
             if (items.length === 0) {
-                this.deliverList.map(item => {
-                    items.push(item.RealName);
+                this.memberManagerList.map(item => {
+                    items.push(item.strManager);
                 });
             }
             picker.pick(
@@ -668,7 +693,7 @@ export default {
                 },
                 event => {
                     if (event.result === "success") {
-                        this.selectDeliverData = this.deliverList[event.data];
+                        this.selectMemberManagerData = this.memberManagerList[event.data];
                         this.index = event.data;
                         this.getData();
                     }
@@ -848,14 +873,14 @@ export default {
             if (this.userInfo.RoleId === 1 || this.userInfo.RoleId === 4) {
                 // this.$navigator.setRightItem(
                 //     {
-                //         text: this.selectDeliverData.RealName, // 展示的文字 (和图片 二选一)
+                //         text: this.selectMemberManagerData.RealName, // 展示的文字 (和图片 二选一)
                 //         textColor: "", // 文字颜色 (默认为白色)
                 //         fontSize: "40", // 字号（默认32px）
                 //         fontWeight: "normal" // 是否加粗（默认不加粗）
                 //     },
                 //     () => {
                 //         // 点击回调
-                //         this.selectDeliver();
+                //         this.selectMemberManager();
                 //     }
                 // );
             }
@@ -877,16 +902,22 @@ export default {
             }
         },
         async QueryAdminList() {
-            var par = {
-                $RoleId: "8,13"
-            };
-            const RES = await API.get_adminList(par);
-            if (RES.map) {
-                var DATA = RES.map.dgData;
-            } else {
-                var DATA = RES.dgData;
-            }
-            this.deliverList = DATA;
+            // var par = {
+            //     $RoleId: "8,13"
+            // };
+            // const RES = await API.get_adminList(par);
+            // if (RES.map) {
+            //     var DATA = RES.map.dgData;
+            // } else {
+            //     var DATA = RES.dgData;
+            // }
+            // this.deliverList = DATA;
+            const {DATA} = await API.get_MemberManager({})
+            this.memberManagerList = DATA
+            this.memberManagerList.unshift({strManager: '全部'})
+            // this.selectMemberManagerData = this.memberManagerList[0]
+            // this.getData()
+
         },
         inputChange(val) {
             this.searchValue = val;
@@ -1019,6 +1050,9 @@ export default {
 }
 .width-50px {
     width: 50px;
+}
+.width-150px {
+    width: 150px;
 }
 .width-200px {
     width: 200px;
