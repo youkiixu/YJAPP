@@ -2,7 +2,7 @@ import axios from './axios.js'
 
 
 let api = {
-	App_Version : '4.5',
+	App_Version : '4.9',
 	YJ_GETORDER : (data) => axios.getAjaxData(data , 'search' , 'YJApp_OrderInfo'),
 	YJ_ENTER  : (data) => axios.getAjaxData(data , 'enterIn'),
 	YJ_SEARCH : (data) => axios.getAjaxData(data , 'search'),
@@ -36,7 +36,7 @@ let api = {
 	// 获取发货信息
 	get_fahuoInfo : (data) => axios.getAjaxData(data , 'search' , 'getFahuoInfo'),
 	// 发货单确认到货
-	YJ_enterFahuo: (data) => axios.getAjaxData(data , 'orderGroup' , 'enterOrderGroup'),
+	YJ_enterFahuo: (data) => axios.getAjaxData(data , 'orderGroup' , '2'),
 	// 读取业务员
     get_adminList: (data) => axios.getAjaxData(data, 'search', 'GetDeliveryList', '217141a5-01d0-4696-9500-ae2d82a8cb4c'),
     // 读取城市经理

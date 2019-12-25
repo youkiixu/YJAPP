@@ -79,8 +79,7 @@
                     </div>
 
                 </div>
-                <div class="search-bar-top"
-                     >
+                <div class="search-bar-top">
                     <div class="search-bar-left"
                          @click="selectbNew">
                         <div class="search-text-box">
@@ -102,8 +101,6 @@
                     </div>
                 </div>
 
-
-
             </div>
 
             <scroller scroll-direction="horizontal"
@@ -111,10 +108,12 @@
                       :style="{height: `${deviceHeight}px`}">
 
                 <div class="table-cell">
-                    <div class="table-td table-head width-150px" v-if="showManger"><text class="table-text">业务员</text></div>
-                    <div class="table-td table-head width-350px" v-if="!showManger"><text class="table-text">业务员</text></div>
-                    <div class="table-td table-head width-400px"><text class="table-text">订单金额</text></div>
-                    <div class="table-td table-head width-200px" v-if="showManger"><text class="table-text">区域经理</text></div>
+                    <div class="table-td table-head width-150px" ><text class="table-text">业务员</text></div>
+                    <!-- <div class="table-td table-head width-150px"
+                         v-if="!showManger"><text class="table-text">业务员</text></div> -->
+                    <div class="table-td table-head width-250px"><text class="table-text">增长额</text></div>
+                    <div class="table-td table-head width-200px" ><text class="table-text">上月基数</text></div>
+                    <div class="table-td table-head width-150px"><text class="table-text">区域经理</text></div>
                     <!-- <div class="table-td table-head width-100px"><text class="table-text">订单数</text></div>
                     <div class="table-td table-head width-200px"><text class="table-text">订单额</text></div>
                     <div class="table-td table-head width-200px"><text class="table-text">客单价</text></div>
@@ -123,10 +122,12 @@
                     <div class="table-td table-head width-200px"><text class="table-text">日期</text></div> -->
                 </div>
                 <div class="table-cell">
-                    <div class="table-td table-bottom  width-150px" v-if="showManger"><text class="table-text">汇总</text></div>
-                    <div class="table-td table-bottom  width-350px" v-if="!showManger"><text class="table-text">汇总</text></div>
-                    <div class="table-td table-bottom  width-400px"><text class="table-text">{{intUCountTotal}}</text></div>
-                    <div class="table-td table-bottom  width-200px" v-if="showManger"><text class="table-text">区域经理</text></div>
+                    <div class="table-td table-bottom  width-150px"><text class="table-text">汇总</text></div>
+                    <!-- <div class="table-td table-bottom  width-350px"
+                         v-if="!showManger"><text class="table-text">汇总</text></div> -->
+                    <div class="table-td table-bottom  width-250px"><text class="table-text">{{intUCountTotal}}</text></div>
+                    <div class="table-td table-bottom  width-200px" ><text class="table-text"></text></div>
+                    <div class="table-td table-bottom  width-150px" ><text class="table-text"></text></div>
                     <!-- <div class="table-td table-head width-100px"><text class="table-text">订单数</text></div>
                     <div class="table-td table-head width-200px"><text class="table-text">订单额</text></div>
                     <div class="table-td table-head width-200px"><text class="table-text">客单价</text></div>
@@ -141,14 +142,16 @@
                       :showRefresh="true"
                       @refresh="getData"
                       loadmoreoffset="2">
-                          <!-- @click="toDetail(item)" -->
+                    <!-- @click="toDetail(item)" -->
                     <cell class="table-cell"
                           v-for="(item , key) in listData"
                           :key="key">
-                        <div class="table-td width-150px" v-if="showManger"><text class="table-text">{{item.strName}}</text></div>
-                        <div class="table-td width-350px" v-if="!showManger"><text class="table-text">{{item.strName}}</text></div>
-                        <div class="table-td width-400px" ><text class="table-text">{{item.intSumPrice}}</text></div>
-                        <div class="table-td width-200px" v-if="showManger"><text class="table-text">{{item.strManager}}</text></div>
+                        <div class="table-td width-150px"><text class="table-text">{{item.strName}}</text></div>
+                        <!-- <div class="table-td width-350px"
+                             v-if="!showManger"><text class="table-text">{{item.strName}}</text></div> -->
+                        <div class="table-td width-250px"><text class="table-text">{{item.intSumPrice}}</text></div>
+                        <div class="table-td width-200px" ><text class="table-text">{{item.intBaseTotal}}</text></div>
+                        <div class="table-td width-150px" ><text class="table-text">{{item.strManager}}</text></div>
                         <!-- <div class="table-td width-100px"><text class="table-text">{{item.intOCount}}</text></div>
                         <div class="table-td width-200px"><text class="table-text">{{item.intSumPrice}}</text></div>
                         <div class="table-td width-200px"><text class="table-text">{{item.intPerPrice}}</text></div>
@@ -241,15 +244,15 @@ export default {
                 strName: "全部"
             },
             selectbNewData: {
-                strName: '否'
+                strName: "否"
             },
             bNewList: [
                 {
-                    strName: '否',
+                    strName: "否",
                     Id: false
                 },
                 {
-                    strName: '是',
+                    strName: "是",
                     Id: true
                 }
             ],
@@ -320,8 +323,8 @@ export default {
                     Id: 0
                 }
             ],
-            yearList: [2019,2020,2021,2022,2023,2024,2025],
-            monthList: [1,2,3,4,5,6,7,8,9,10,11,12],
+            yearList: [2019, 2020, 2021, 2022, 2023, 2024, 2025],
+            monthList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
             memberManagerList: [],
             productsList: [],
             productsCheckList: [],
@@ -392,8 +395,8 @@ export default {
 
             if (this.selectMemberManagerData.strManager != "全部") {
                 param = Object.assign(param, {
-                    'strManager': this.selectMemberManagerData.strManager,
-                    'IdManager': this.selectMemberManagerData.IdManager
+                    strManager: this.selectMemberManagerData.strManager,
+                    IdManager: this.selectMemberManagerData.IdManager
                 });
             } else {
                 delete param["strManager"];
@@ -428,22 +431,21 @@ export default {
             }
 
             //是否新会员
-            if(this.selectbNewData.strName != '否') {
+            if (this.selectbNewData.strName != "否") {
                 param = Object.assign(param, {
                     bNew: this.selectbNewData.Id
                 });
             } else {
-                delete param['bNew']
+                delete param["bNew"];
             }
 
-            if(this.searchValue != '') {
-                param = Object.assign(param , {
-                    'DeliverName': this.searchValue
-                })
+            if (this.searchValue != "") {
+                param = Object.assign(param, {
+                    DeliverName: this.searchValue
+                });
             } else {
-                delete param['DeliverName']
+                delete param["DeliverName"];
             }
-
 
             // 配送类型
             if (this.selectRemindTypeData.strName != "全部") {
@@ -462,22 +464,20 @@ export default {
             // console.log(JSON.stringify(param));
 
             // if (this.userInfo.RoleId == 8 || this.userInfo.RoleId == 13) {
-                RES = await API.get_DayRise_YSH(param);
-                // console.log('111',RES);
-
+            RES = await API.get_DayRise_YSH(param);
+            // console.log('111',RES);
             // } else {
             //     RES = await API.get_OrderSumManager_YSH(param);
             // }
             this.listData = [];
             var DGDATA = RES.DATA;
-            if(this.selectMemberManagerData.strManager != "全部") {
-                this.showManger = true
+            if (this.selectMemberManagerData.strManager != "全部") {
+                this.showManger = true;
             } else {
-                if(DGDATA[0].strManager) {
-                    this.showManger = true
+                if (DGDATA[0].strManager) {
+                    this.showManger = true;
                 } else {
-                this.showManger = false
-
+                    this.showManger = false;
                 }
             }
 
@@ -497,7 +497,7 @@ export default {
                     );
                     // this.intOCountTotal = accAdd(
                     //     this.intOCountTotal,
-                    //     item.intOCount
+                    //     item.intBaseTotal
                     // );
                     // this.intSumPriceTotal = accAdd(
                     //     this.intSumPriceTotal,
@@ -536,101 +536,6 @@ export default {
                 this.$refs["list"].refreshEnd();
             } else {
                 this.$notice.loading.hide();
-            }
-        },
-        async toDetail(item) {
-            this.$notice.loading.show("正在加载");
-            let param = {
-                key: "RyAkcFaz6KCKdW06EQKFHNEISQDDA",
-                strSysMac: "30-5A-3A-E4-4F-14",
-                strSysCode: "YJAPP",
-                strAuthor: "YJ",
-                dStartDate: item.orderDate
-                    ? item.orderDate
-                    : this.param.dStartDate,
-                dEndDate: item.orderDate ? item.orderDate : this.param.dEndDate
-            };
-            // let deliverId = "";
-            // this.deliverList.map(u => {
-            //     if (u.RealName == item.DeliverName) {
-            //         deliverId = u.Id;
-            //     }
-            // });
-
-            // param = Object.assign(param, {
-            //     SalesmanId: deliverId
-            // });
-            // 选择业务员
-            param = Object.assign(param , {
-                'DeliverName': item.DeliverName
-            })
-
-            // 选择产品类别
-            if (this.selectProductData.strName != "全部") {
-                param = Object.assign(param, {
-                    qCode: this.selectProductData.Id
-                });
-            } else {
-                delete param["qCode"];
-            }
-
-            // 选择审核
-            if (this.selectProductionData.strName != "全部") {
-                param = Object.assign(param, {
-                    Production: this.selectProductionData.Id
-                });
-            } else {
-                delete param["Production"];
-            }
-
-            // 订单状态
-            if (this.selectOrderStatusData.strName != "全部") {
-                param = Object.assign(param, {
-                    OrderStatus: this.selectOrderStatusData.Id
-                });
-            } else {
-                delete param["OrderStatus"];
-            }
-
-            // 配送类型
-            if (this.selectRemindTypeData.strName != "全部") {
-                param = Object.assign(param, {
-                    Remindtype: this.selectRemindTypeData.Id
-                });
-            } else {
-                delete param["Remindtype"];
-            }
-
-            //是否新会员
-            if(this.selectbNewData.strName != '否') {
-                param = Object.assign(param, {
-                    bNews: this.selectbNewData.Id
-                });
-            } else {
-                delete param['bNews']
-            }
-
-            let { DATA } = await API.get_OrderManagerDetail_YSH(param);
-
-            this.$notice.loading.hide();
-            if (this.isDeliver) {
-                this.$router.open({
-                    name: "performanceGrowthDetail",
-                    type: "PUSH",
-                    params: {
-                        total: item,
-                        listItem: DATA
-                    }
-                });
-            } else {
-                this.$router.open({
-                    name: "performanceGrowthAdminDetail",
-                    type: "PUSH",
-                    params: {
-                        total: item,
-                        listItem: DATA
-                    }
-                });
             }
         },
         init(param) {
@@ -693,7 +598,9 @@ export default {
                 },
                 event => {
                     if (event.result === "success") {
-                        this.selectMemberManagerData = this.memberManagerList[event.data];
+                        this.selectMemberManagerData = this.memberManagerList[
+                            event.data
+                        ];
                         this.index = event.data;
                         this.getData();
                     }
@@ -702,7 +609,7 @@ export default {
         },
         selectYear() {
             var items = this.yearList;
-            var index = this.yearList.indexOf(Number(this.param.intYear))
+            var index = this.yearList.indexOf(Number(this.param.intYear));
             picker.pick(
                 {
                     index: index,
@@ -710,7 +617,7 @@ export default {
                 },
                 event => {
                     if (event.result === "success") {
-                        this.param.intYear = this.yearList[event.data]
+                        this.param.intYear = this.yearList[event.data];
                         this.getData();
                     }
                 }
@@ -718,7 +625,7 @@ export default {
         },
         selectMonth() {
             var items = this.monthList;
-            var index = this.monthList.indexOf(Number(this.param.intMonth))
+            var index = this.monthList.indexOf(Number(this.param.intMonth));
             picker.pick(
                 {
                     index: index,
@@ -726,7 +633,7 @@ export default {
                 },
                 event => {
                     if (event.result === "success") {
-                        this.param.intMonth = this.monthList[event.data]
+                        this.param.intMonth = this.monthList[event.data];
                         this.getData();
                     }
                 }
@@ -745,7 +652,6 @@ export default {
         },
 
         wxcCheckBoxListChecked(e) {
-            console.log(e);
 
             if (e.checkedList.length) {
                 let strName = "";
@@ -860,9 +766,7 @@ export default {
                 },
                 event => {
                     if (event.result === "success") {
-                        this.selectbNewData = this.bNewList[
-                            event.data
-                        ];
+                        this.selectbNewData = this.bNewList[event.data];
                         this.index5 = event.data;
                         this.getData();
                     }
@@ -912,18 +816,17 @@ export default {
             //     var DATA = RES.dgData;
             // }
             // this.deliverList = DATA;
-            const {DATA} = await API.get_MemberManager({})
-            this.memberManagerList = DATA
-            this.memberManagerList.unshift({strManager: '全部'})
+            const { DATA } = await API.get_MemberManager({});
+            this.memberManagerList = DATA;
+            this.memberManagerList.unshift({ strManager: "全部" });
             // this.selectMemberManagerData = this.memberManagerList[0]
             // this.getData()
-
         },
         inputChange(val) {
             this.searchValue = val;
         },
         searchClick() {
-            this.getData()
+            this.getData();
         }
     }
 };
@@ -1051,14 +954,21 @@ export default {
 .width-50px {
     width: 50px;
 }
+.width-100px {
+    width: 100px;
+}
 .width-150px {
     width: 150px;
 }
+
 .width-200px {
     width: 200px;
 }
-.width-100px {
-    width: 100px;
+.width-250px {
+    width: 250px;
+}
+.width-300px {
+    width: 300px;
 }
 .width-400px {
     width: 400px;

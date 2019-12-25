@@ -19,7 +19,7 @@
         </div>
         <!-- @loadmore="getData" -->
         <list class="bui-list" ref="list" :show-scrollbar="true" :showRefresh="true" @refresh="getData"   loadmoreoffset="2">
-            <cell class="table-cell" v-for="(item , key) in listData"  :key="key" @click="toDetail(item)">
+            <cell class="table-cell" v-for="(item , key) in listData"  :key="key" >
                 <div class="table-td"><text class="table-text">{{item.rowNum}}</text></div>
                 <div class="table-td"><text class="table-text">{{item.Id}}</text></div>
                 <div class="table-td"><text class="table-text">{{item.UserId}}</text></div>
@@ -37,7 +37,7 @@
             </cell>
         </list>
       </scroller>
-	
+
 	</div>
 
 </template>
@@ -94,7 +94,7 @@ export default {
       let param = {};
       param  = Object.assign(this.param , param)
       if(onrefreshState) {
-        
+
       } else {
         this.$notice.loading.show("正在加载");
       }
@@ -123,7 +123,7 @@ export default {
           });
         }
       }
-      
+
       if(onrefreshState) {
           this.$refs["list"].refreshEnd()
       } else {
@@ -145,7 +145,7 @@ export default {
       console.log(param)
       title = this.param.name + title
       this.$navigator.setCenterItem({
-          text: title,                               // 展示的文字 (和图片 二选一)    
+          text: title,                               // 展示的文字 (和图片 二选一)
           textColor: '',                          // 文字颜色 (默认为白色)
           fontSize: '32',                         // 字号（默认32px）
           fontWeight: 'normal',                   // 是否加粗（默认不加粗）

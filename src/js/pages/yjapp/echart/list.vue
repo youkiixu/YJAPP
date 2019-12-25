@@ -2,7 +2,7 @@
 	<div class="page">
 		<div class="search-bar">
 			<datepick ref="datePick" :beginDate="param['@StartDate']" :endDate="param['@EndDate']" init @selectTime="selectTime" @startDateFinish="startDateFinish" @endDateFinish="endDateFinish"></datepick>
-		</div> 
+		</div>
     <scroller scroll-direction="horizontal" class="table">
         <div class="table-cell">
             <div class="table-td table-head"><text class="table-text">合计</text></div>
@@ -11,8 +11,8 @@
             <div class="table-td table-head"><text class="table-text">{{dispatching}}</text></div>
             <div class="table-td table-head"><text class="table-text">{{PayCollectionMoneySum}}</text></div>
             <div class="table-td table-head"><text class="table-text">{{UnPayCollectionMoneySum}}</text></div>
-            
-            
+
+
             <div class="table-td table-head"><text class="table-text">{{sumMoney}}</text></div>
             <div class="table-td table-head"><text class="table-text">{{percentage}}</text></div>
         </div>
@@ -40,7 +40,7 @@
             </cell>
         </list>
       </scroller>
-	
+
 	</div>
 
 </template>
@@ -103,7 +103,7 @@ export default {
       const _this = this;
       let param = {};
       param  = Object.assign(this.param , param)
-      if(this.userInfo.RoleId == 1 || this.userInfo.RoleId== 4) {
+      if(this.userInfo.RoleId == 1 || this.userInfo.RoleId== 4 || this.userInfo.RoleId == 11) {
 
       } else {
           param =  Object.assign(param , {'@DistributorId' : this.userInfo.adminId})
@@ -112,7 +112,7 @@ export default {
         param =  Object.assign(param , {'@DistributorId' : this.selectDeliverData.Id})
       }
       if(onrefreshState) {
-        
+
       } else {
         this.$notice.loading.show("正在加载");
       }
@@ -164,7 +164,7 @@ export default {
     },
     init(param) {
       this.$navigator.setCenterItem({
-          text: param.params.title,                               // 展示的文字 (和图片 二选一)    
+          text: param.params.title,                               // 展示的文字 (和图片 二选一)
           textColor: '',                          // 文字颜色 (默认为白色)
           fontSize: '32',                         // 字号（默认32px）
           fontWeight: 'normal',                   // 是否加粗（默认不加粗）
@@ -189,16 +189,16 @@ export default {
       this.getData();
     },
     startDateFinish(startDate) {
-      this.param["@StartDate"] = startDate 
+      this.param["@StartDate"] = startDate
       if (this.param["@EndDate"] == undefined) {
-        this.param["@EndDate"] = startDate  
+        this.param["@EndDate"] = startDate
       }
       this.getData()
     },
     endDateFinish(endDate) {
       this.param["@EndDate"] = endDate
       if (this.param["@StartDate"] == undefined) {
-        this.param["@StartDate"] = endDate 
+        this.param["@StartDate"] = endDate
       }
       this.getData()
     },
@@ -209,7 +209,7 @@ export default {
           items.push(item.RealName)
         })
       }
-      
+
       picker.pick({
             index: this.index,
             items
@@ -225,7 +225,7 @@ export default {
     setNav() {
       if(this.userInfo.RoleId === 1 || this.userInfo.RoleId === 4) {
         this.$navigator.setRightItem({
-            text: this.selectDeliverData.RealName,                               // 展示的文字 (和图片 二选一)    
+            text: this.selectDeliverData.RealName,                               // 展示的文字 (和图片 二选一)
             textColor: '',                          // 文字颜色 (默认为白色)
             fontSize: '40',                         // 字号（默认32px）
             fontWeight: 'normal'                   // 是否加粗（默认不加粗）
@@ -259,7 +259,7 @@ export default {
           name: 'echartdetail',
           type: 'PUSH',
           params: par
-      })	
+      })
     }
   }
 };

@@ -92,14 +92,24 @@
 
                 <div class="table-cell">
                     <div class="table-td table-head"><text class="table-text">业务员</text></div>
-                    <div class="table-td table-head width-100px"><text class="table-text">会员数</text></div>
-                    <div class="table-td table-head width-100px"><text class="table-text">订单数</text></div>
                     <div class="table-td table-head width-200px"><text class="table-text">订单额</text></div>
                     <div class="table-td table-head width-200px"><text class="table-text">客单价</text></div>
+                    <div class="table-td table-head width-100px"><text class="table-text">会员数</text></div>
+                    <div class="table-td table-head width-100px"><text class="table-text">订单数</text></div>
                     <div class="table-td table-head width-200px"><text class="table-text">关闭单金额</text></div>
                     <div class="table-td table-head width-200px"><text class="table-text">折扣额</text></div>
                     <div class="table-td table-head width-200px"><text class="table-text">日期</text></div>
                 </div>
+                <div class="table-cell">
+                        <div class="table-td table-bottom "><text class="table-text">汇总:</text></div>
+                        <div class="table-td table-bottom width-200px"><text class="table-text">{{intSumPriceTotal}}</text></div>
+                        <div class="table-td table-bottom width-200px"><text class="table-text">{{intPerPriceTotal }}</text></div>
+                        <div class="table-td table-bottom width-100px"><text class="table-text">{{intUCountTotal}}</text></div>
+                        <div class="table-td table-bottom width-100px"><text class="table-text">{{intOCountTotal}}</text></div>
+                        <div class="table-td table-bottom width-200px"><text class="table-text">{{intClosePriceTotal }}</text></div>
+                        <div class="table-td table-bottom width-200px"><text class="table-text">{{intDisPriceTotal ? intDisPriceTotal : intOnlinePaymentDiscountsTotal }}</text></div>
+                        <div class="table-td table-bottom width-200px"><text class="table-text">日期</text></div>
+                    </div>
                 <!-- @loadmore="getData" -->
                 <list class="bui-list"
                       ref="list"
@@ -107,25 +117,16 @@
                       :showRefresh="true"
                       @refresh="getData"
                       loadmoreoffset="2">
-                    <cell class="table-cell">
-                        <div class="table-td table-bottom "><text class="table-text">汇总:</text></div>
-                        <div class="table-td table-bottom width-100px"><text class="table-text">{{intUCountTotal}}</text></div>
-                        <div class="table-td table-bottom width-100px"><text class="table-text">{{intOCountTotal}}</text></div>
-                        <div class="table-td table-bottom width-200px"><text class="table-text">{{intSumPriceTotal}}</text></div>
-                        <div class="table-td table-bottom width-200px"><text class="table-text">{{intPerPriceTotal }}</text></div>
-                        <div class="table-td table-bottom width-200px"><text class="table-text">{{intClosePriceTotal }}</text></div>
-                        <div class="table-td table-bottom width-200px"><text class="table-text">{{intDisPriceTotal ? intDisPriceTotal : intOnlinePaymentDiscountsTotal }}</text></div>
-                        <div class="table-td table-bottom width-200px"><text class="table-text">日期</text></div>
-                    </cell>
+
                     <cell class="table-cell"
                           v-for="(item , key) in listData"
                           @click="toDetail(item)"
                           :key="key">
                         <div class="table-td"><text class="table-text">{{item.DeliverName}}</text></div>
-                        <div class="table-td width-100px"><text class="table-text">{{item.intUCount}}</text></div>
-                        <div class="table-td width-100px"><text class="table-text">{{item.intOCount}}</text></div>
                         <div class="table-td width-200px"><text class="table-text">{{item.intSumPrice}}</text></div>
                         <div class="table-td width-200px"><text class="table-text">{{item.intPerPrice}}</text></div>
+                        <div class="table-td width-100px"><text class="table-text">{{item.intUCount}}</text></div>
+                        <div class="table-td width-100px"><text class="table-text">{{item.intOCount}}</text></div>
                         <div class="table-td width-200px"><text class="table-text">{{item.intClosePrice}}</text></div>
                         <div class="table-td width-200px"><text class="table-text">{{item.intDisPrice ? item.intDisPrice : item.OnlinePaymentDiscounts}}</text></div>
                         <div class="table-td width-200px"><text class="table-text">{{item.orderDate}}</text></div>
