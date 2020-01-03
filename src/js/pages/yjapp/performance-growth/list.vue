@@ -652,6 +652,7 @@ export default {
         },
 
         wxcCheckBoxListChecked(e) {
+            console.log(e);
 
             if (e.checkedList.length) {
                 let strName = "";
